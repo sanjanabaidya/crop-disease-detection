@@ -2,7 +2,7 @@ import express from 'express';
 
 const router = express.Router();
 
-// GET /api/weather-iot
+// GET /api/weather-iot & /api/weather-advisory
 router.get('/weather-iot', (req, res) => {
   res.json({
     success: true,
@@ -11,18 +11,22 @@ router.get('/weather-iot', (req, res) => {
       soilMoisture: 48, // %
       soilTemp: 24.2, // °C
       ambientTemp: 29.5, // °C
+      humidity: "68%",
+      windSpeed: "12 km/h",
       solarRadiation: "780 W/m²",
       phSensor: 6.5
     },
     forecast: [
-      { day: "Today", temp: "30°C", rainProb: 15, condition: "Sunny" },
+      { day: "Today", temp: "30°C", rainProb: 15, condition: "Sunny (Optimal Application Window)" },
       { day: "Tomorrow", temp: "28°C", rainProb: 80, condition: "Heavy Rain Alert" },
       { day: "Day 3", temp: "26°C", rainProb: 60, condition: "Light Shower" },
       { day: "Day 4", temp: "29°C", rainProb: 20, condition: "Partly Cloudy" }
     ],
     aiLeachingRisk: {
       riskLevel: "HIGH (80% Rain Tomorrow)",
-      advisory: "⚠️ Postpone top-dressing Urea today to prevent nitrogen leaching into groundwater."
+      advisory: "⚠️ Postpone top-dressing Neem-Coated Urea today to prevent nitrogen leaching into groundwater.",
+      odiaAdvisory: "⚠️ ଆସନ୍ତାକାଲି ପ୍ରବଳ ବର୍ଷା ସମ୍ଭାବନା (୮୦%)! ସାର ଧୋଇଯିବା ରୋକିବା ପାଇଁ ଆଜି ୟୁରିଆ ପ୍ରୟୋଗ ସ୍ଥଗିତ ରଖନ୍ତୁ।",
+      bestWindow: "Apply fertilizers during early morning hours (6:00 AM - 9:00 AM) when wind speed is under 15 km/h."
     }
   });
 });

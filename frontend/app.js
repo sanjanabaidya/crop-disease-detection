@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AgroPulse Kisan AI - Client Application & REST API Connector (English & Odia)
+   AgroPulse Kisan AI - Client App with Voice I/O & Weather Advisory
    ========================================================================== */
 
 const API_BASE_URL = 'http://localhost:5000/api';
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const TRANSLATIONS = {
     en: {
-      tagline: "Crop Calendar & Nearest Fertilizer Shop Locator",
+      tagline: "Voice Input/Output & Weather Fertilizer Advisory",
       langLabel: "Language / ଭାଷା:",
       voiceBtn: "Read Out Recommendation (Farmer Voice)",
       modeBtn: "Farmer Easy Mode: OFF",
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       calcSub: "Convert nutrient deficiency requirements (N, P₂O₅, K₂O) into exact commercial bag quantities for any field size."
     },
     or: {
-      tagline: "ଫସଲ କ୍ୟାଲେଣ୍ଡର ଓ ନିକଟସ୍ଥ ଖତ ଦୋକାନ ସୂଚନା",
+      tagline: "ଭଏସ ଇନପୁଟ୍ ଓ ପାଣିପାଗ ଅନୁସାରେ ସାର ସିଫାରିଶ୍",
       langLabel: "ଭାଷା / Language:",
       voiceBtn: "ସିଫାରିଶ୍ ଶୁଣନ୍ତୁ (କୃଷକ ସ୍ୱର)",
       modeBtn: "କୃଷକ ସରଳ ମୋଡ୍: ବନ୍ଦ",
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
       lvlOpt: "ସନ୍ତୁଳିତ / ଉତ୍ତମ",
       lvlExc: "ଅତ୍ୟଧିକ",
       divChemistry: "ମାଟି ରସାୟନ ଓ ଜୈବିକ କାର୍ବନ୍",
-      namePh: "ମାଟିର ପିଏଚ୍ (pH ਅੰਕ)",
+      namePh: "ମାଟିର ପିଏଚ୍ (pH ଅଂକ)",
       phAcidic: "ଅମ୍ଳୀୟ (<6.0)",
       phNeutral: "ସାଧାରଣ (6.0-7.5)",
       phAlkaline: "କ୍ଷାରୀୟ (>7.5)",
@@ -142,13 +142,16 @@ document.addEventListener('DOMContentLoaded', () => {
     ph: 6.5,
     oc: 0.55,
     moisture: 45,
-    theme: 'dark'
+    theme: 'dark',
+    weatherAdvisory: ''
   };
 
   // DOM Elements
   const elSelectLang = document.getElementById('select-lang');
   const elBtnVoice = document.getElementById('btn-voice-assistant');
   const elBtnMode = document.getElementById('btn-toggle-farmer-mode');
+  const elBtnMicInput = document.getElementById('btn-mic-input');
+  const elMicText = document.getElementById('mic-text');
   
   const elSelectCrop = document.getElementById('select-crop');
   const elSelectStage = document.getElementById('select-stage');
@@ -204,8 +207,9 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchSoilTipsData();
   fetchCropCalendarData('wheat');
   fetchDealersData();
+  fetchWeatherAdvisoryData();
 
-  // Multi-Language Switcher (English & Odia)
+  // Multi-Language Switcher
   elSelectLang.addEventListener('change', (e) => {
     state.lang = e.target.value;
     applyLanguageTranslations();
@@ -219,26 +223,83 @@ document.addEventListener('DOMContentLoaded', () => {
       if (dict[key]) el.textContent = dict[key];
     });
 
-    if (state.lang === 'or') elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 ସିଫାରିଶ୍ ଶୁଣନ୍ତୁ (କୃଷକ ସ୍ୱର)`;
-    else elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 Read Out Recommendation (Farmer Voice)`;
+    if (state.lang === 'or') {
+      elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 ସିଫାରିଶ୍ ଶୁଣନ୍ତୁ (କୃଷକ ସ୍ୱର)`;
+      if (elMicText) elMicText.textContent = `କୁହନ୍ତୁ (Voice Input - ଭଏସ ଇନପୁଟ୍)`;
+    } else {
+      elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 Read Out Recommendation (Farmer Voice)`;
+      if (elMicText) elMicText.textContent = `Click & Speak Field Setup (Voice Input)`;
+    }
 
     const modeText = state.farmerMode ? (state.lang === 'or' ? 'କୃଷକ ସରଳ ମୋଡ୍: ଚାଲୁ' : 'Farmer Easy Mode: ON') : (state.lang === 'or' ? 'କୃଷକ ସରଳ ମୋଡ୍: ବନ୍ଦ' : 'Farmer Easy Mode: OFF');
     elBtnMode.innerHTML = `👨‍🌾 ${modeText}`;
   }
 
-  // Voice Reader
+  // =========================================================================
+  // 1. VOICE-BASED INPUT (SpeechRecognition for Farmers)
+  // =========================================================================
+  if (elBtnMicInput) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      elBtnMicInput.addEventListener('click', () => {
+        recognition.lang = state.lang === 'or' ? 'or-IN' : 'en-US';
+        recognition.start();
+        elBtnMicInput.classList.add('listening');
+        if (elMicText) elMicText.textContent = state.lang === 'or' ? "🎙️ ଶୁଣୁଛୁ... (Speaking...)" : "🎙️ Listening... Speak your crop and land size";
+        showToast(state.lang === 'or' ? "🎙️ କୃଷକ ଭଏସ ଇନପୁଟ୍ ସକ୍ରିୟ..." : "🎙️ Voice Input active! Speak now...");
+      });
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript.toLowerCase();
+        console.log("Voice Transcript:", transcript);
+        elBtnMicInput.classList.remove('listening');
+        if (elMicText) elMicText.textContent = `" ${transcript} "`;
+
+        // Parse transcript parameters
+        if (transcript.includes('wheat') || transcript.includes('ଗହମ')) { state.crop = 'wheat'; elSelectCrop.value = 'wheat'; }
+        else if (transcript.includes('rice') || transcript.includes('paddy') || transcript.includes('ଧାନ')) { state.crop = 'rice'; elSelectCrop.value = 'rice'; }
+        else if (transcript.includes('cotton') || transcript.includes('କପା')) { state.crop = 'cotton'; elSelectCrop.value = 'cotton'; }
+
+        const numMatch = transcript.match(/\d+(\.\d+)?/);
+        if (numMatch) {
+          state.landSize = parseFloat(numMatch[0]);
+          elInputLandSize.value = state.landSize;
+        }
+
+        calculateAndRender();
+        showToast(state.lang === 'or' ? "✅ ଭଏସ ଇନପୁଟ୍ ଅନୁସାରେ ଫର୍ମ ଅପଡେଟ୍ ହୋଇଛି!" : `✅ Voice recognized: "${transcript}" - Form updated!`);
+      };
+
+      recognition.onerror = () => {
+        elBtnMicInput.classList.remove('listening');
+        applyLanguageTranslations();
+      };
+    } else {
+      elBtnMicInput.addEventListener('click', () => {
+        showToast("⚠️ Speech Recognition not supported in this browser mode.");
+      });
+    }
+  }
+
+  // =========================================================================
+  // 2. VOICE-BASED OUTPUT (SpeechSynthesis Audio Narration)
+  // =========================================================================
   elBtnVoice.addEventListener('click', () => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const areaText = `${state.landSize} ${state.unit}`;
       let speechText = state.lang === 'or' 
-        ? `ନମସ୍କାର କୃଷକ ଭାଇ, ଆପଣଙ୍କର ${areaText} ଜମି ପାଇଁ ନିମ୍ ୟୁରିଆ, ଡିଏପି ଏବଂ ଜୈବିକ ଖତର ସନ୍ତୁଳିତ ବ୍ୟବହାର କରିବାକୁ ସିଫାରିଶ୍ କରାଯାଉଛି।`
-        : `Hello Farmer! For your ${state.crop} crop on ${areaText}, we recommend a balanced prescription of Neem Coated Urea, DAP, and organic vermicompost to protect soil health and maximize yield.`;
+        ? `ନମସ୍କାର କୃଷକ ଭାଇ, ଆପଣଙ୍କର ${areaText} ଜମି ପାଇଁ ନିମ୍ ୟୁରିଆ, ଡିଏପି ଏବଂ ଜୈବିକ ଖତର ସନ୍ତୁଳିତ ବ୍ୟବହାର କରିବାକୁ ସିଫାରିଶ୍ କରାଯାଉଛି। ${state.weatherAdvisory}`
+        : `Hello Farmer! For your ${state.crop} crop on ${areaText}, we recommend a balanced prescription of Neem Coated Urea, DAP, and organic vermicompost to protect soil health. ${state.weatherAdvisory}`;
       
       const utterance = new SpeechSynthesisUtterance(speechText);
       utterance.rate = 0.9;
       window.speechSynthesis.speak(utterance);
-      showToast(state.lang === 'or' ? "🔊 ସିଫାରିଶ ଶୁଣାଯାଉଛି..." : "🔊 Speaking recommendation aloud...");
+      showToast(state.lang === 'or' ? "🔊 ସିଫାରିଶ ଓ ପାଣିପାଗ ସୂଚନା ଶୁଣାଯାଉଛି..." : "🔊 Speaking recommendation & weather advisory aloud...");
     }
   });
 
@@ -325,6 +386,31 @@ document.addEventListener('DOMContentLoaded', () => {
       calculateAndRender();
     });
   });
+
+  // =========================================================================
+  // WEATHER-BASED FERTILIZER ADVISORY REST API (GET /api/weather-iot)
+  // =========================================================================
+  async function fetchWeatherAdvisoryData() {
+    try {
+      const res = await fetch(`${API_BASE_URL}/weather-iot`);
+      const data = await res.json();
+      if (data.success && data.aiLeachingRisk) {
+        state.weatherAdvisory = state.lang === 'or' ? data.aiLeachingRisk.odiaAdvisory : data.aiLeachingRisk.advisory;
+        
+        const diagTitle = document.getElementById('diag-weather-title');
+        const diagDesc = document.getElementById('diag-weather-desc');
+        if (diagTitle && diagDesc) {
+          diagTitle.textContent = state.lang === 'or' ? `🌦️ ପାଣିପାଗ ଅନୁସାରେ ସାର ଦେବାର ସମୟ ସୂଚନା` : `🌦️ Weather-Based Fertilizer Timing Advisory`;
+          diagDesc.textContent = state.weatherAdvisory;
+        }
+
+        document.getElementById('weather-risk-title').textContent = `AI Rain Risk: ${data.aiLeachingRisk.riskLevel}`;
+        document.getElementById('weather-advisory').textContent = data.aiLeachingRisk.advisory;
+      }
+    } catch (err) {
+      console.warn("Weather API error", err);
+    }
+  }
 
   // DIAGNOSTIC REST API
   async function calculateAndRender() {

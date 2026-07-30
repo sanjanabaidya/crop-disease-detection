@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgroPulse Kisan | Farmer AI (English & ଓଡ଼ିଆ Odia)</title>
-  <meta name="description" content="AI Soil Diagnostic, Crop Calendar, Soil Improvement Tips, and Nearest Fertilizer Shop Locator in English and Odia.">
+  <title>AgroPulse Kisan | Voice I/O & Weather Fertilizer Advisory (English & Odia)</title>
+  <meta name="description" content="Voice-based hands-free input/output for farmers, weather-based fertilizer advisory, and precision agronomy in English and Odia.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +52,7 @@
         </div>
         <div class="brand-text">
           <h1>AgroPulse <span>Kisan AI</span></h1>
-          <p data-i18n="tagline">Crop Calendar & Nearest Fertilizer Shop Locator</p>
+          <p data-i18n="tagline">Voice Input/Output & Weather Fertilizer Advisory</p>
         </div>
       </div>
 
@@ -60,6 +60,10 @@
         <button class="nav-btn active" data-tab="diagnostic" id="tab-diagnostic">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           <span data-i18n="tabDiagnostic">Soil Diagnostic</span>
+        </button>
+        <button class="nav-btn" data-tab="weather" id="tab-weather">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+          <span>🌤️ Weather Advisory</span>
         </button>
         <button class="nav-btn" data-tab="tips" id="tab-tips">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -71,15 +75,11 @@
         </button>
         <button class="nav-btn" data-tab="locator" id="tab-locator">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>📍 Nearest Fertilizer Shop</span>
+          <span>📍 Nearest Shop</span>
         </button>
         <button class="nav-btn" data-tab="vision" id="tab-vision">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           <span>👁️ Vision AI</span>
-        </button>
-        <button class="nav-btn" data-tab="weather" id="tab-weather">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
-          <span>🌤️ Weather & Carbon</span>
         </button>
         <button class="nav-btn" data-tab="calculator" id="tab-calculator">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
@@ -107,7 +107,7 @@
         <!-- Hero Visual Banner -->
         <div class="farmer-hero-card" style="background-image: linear-gradient(to right, rgba(11, 19, 32, 0.92), rgba(11, 19, 32, 0.55)), url('assets/hero_banner.png');">
           <div class="hero-content">
-            <span class="hero-badge">🌱 Precision Soil Diagnostic & Shop Locator</span>
+            <span class="hero-badge">🎙️ Voice Input Enabled • 🌦️ Weather Advisory</span>
             <h2 data-i18n="heroTitle">Smart Fertilizer Recommendation for High Yield</h2>
             <p data-i18n="heroDesc">Combines chemical precision with eco-organic compost, bio-fertilizers, and soil microbial protection to ensure high crop production while keeping soil fertile for generations.</p>
           </div>
@@ -130,6 +130,14 @@
             <div class="panel-header">
               <h2 data-i18n="formHeading">Soil Test & Field Setup</h2>
               <span class="badge" data-i18n="badgeLive">Live Engine</span>
+            </div>
+
+            <!-- Voice Input Button Bar -->
+            <div class="voice-input-banner">
+              <button type="button" id="btn-mic-input" class="btn-mic">
+                <span class="mic-icon">🎙️</span>
+                <span id="mic-text">Click & Speak Field Setup (Voice Input)</span>
+              </button>
             </div>
 
             <!-- Visual Soil Color Picker -->
@@ -342,6 +350,15 @@
               </div>
             </div>
 
+            <!-- Weather Advisory Alert Box -->
+            <div class="card alert-card weather-advisory-card">
+              <div class="alert-icon">🌧️</div>
+              <div class="alert-content">
+                <h5 id="diag-weather-title">🌦️ Weather-Based Fertilizer Timing Advisory</h5>
+                <p id="diag-weather-desc">⚠️ Heavy rainfall predicted tomorrow (80% probability): Postpone top-dressing Neem-Coated Urea by 48 hours to prevent nitrogen leaching into groundwater.</p>
+              </div>
+            </div>
+
             <!-- Visual Deficit Radar & Bar Chart -->
             <div class="card chart-card">
               <div class="card-header">
@@ -422,7 +439,76 @@
         </div>
       </section>
 
-      <!-- TAB 2: SOIL HEALTH IMPROVEMENT TIPS -->
+      <!-- TAB 2: WEATHER-BASED FERTILIZER ADVISORY -->
+      <section class="tab-pane" id="pane-weather">
+        <div class="calc-container">
+          <div class="calc-header">
+            <h2>🌤️ Micro-Climate & Weather-Based Fertilizer Advisory</h2>
+            <p>Real-time micro-climate radar, 7-day precipitation forecast, and dynamic AI application timing alerts.</p>
+          </div>
+
+          <div class="calc-grid">
+            <!-- IoT Weather Radar Card -->
+            <div class="card">
+              <h3>IoT Soil & Weather Sensors</h3>
+              <div class="weather-metrics-grid">
+                <div class="mini-card">
+                  <span class="m-label">Soil Moisture</span>
+                  <span class="m-val highlight" id="iot-moisture">48% Optimal</span>
+                </div>
+                <div class="mini-card">
+                  <span class="m-label">Soil Temperature</span>
+                  <span class="m-val" id="iot-soil-temp">24.2 °C</span>
+                </div>
+                <div class="mini-card">
+                  <span class="m-label">Ambient Temp</span>
+                  <span class="m-val" id="iot-ambient-temp">29.5 °C</span>
+                </div>
+                <div class="mini-card">
+                  <span class="m-label">Solar Radiation</span>
+                  <span class="m-val" id="iot-solar">780 W/m²</span>
+                </div>
+              </div>
+
+              <div class="alert-card" style="margin-top: 1rem;">
+                <div class="alert-icon">🌧️</div>
+                <div class="alert-content">
+                  <h5 id="weather-risk-title">AI Rain Leaching Risk: HIGH (80% Rain Tomorrow)</h5>
+                  <p id="weather-advisory">⚠️ Postpone top-dressing Urea today to prevent nitrogen leaching into groundwater.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carbon Credit Card -->
+            <div class="card carbon-cert-card">
+              <div class="cert-header">
+                <img src="assets/carbon_badge.png" alt="Carbon Badge" class="carbon-badge-img">
+                <div>
+                  <h3>Farmer Soil Carbon Offset Certificate</h3>
+                  <span class="sub-text" id="cert-id">ECO-CARBON-2026-889142</span>
+                </div>
+              </div>
+
+              <div class="carbon-stats-box">
+                <div class="c-stat">
+                  <span>CO₂e Saved / Year</span>
+                  <strong id="carbon-co2">3.12 Tons</strong>
+                </div>
+                <div class="c-stat">
+                  <span>Credits Earned</span>
+                  <strong class="highlight" id="carbon-credits">11.5 Credits</strong>
+                </div>
+                <div class="c-stat">
+                  <span>Estimated Value</span>
+                  <strong id="carbon-value">$212.75 USD</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: SOIL HEALTH IMPROVEMENT TIPS -->
       <section class="tab-pane" id="pane-tips">
         <div class="calc-container">
           <div class="calc-header">
@@ -436,7 +522,7 @@
         </div>
       </section>
 
-      <!-- TAB 3: CROP CALENDAR WITH FERTILIZER SCHEDULE -->
+      <!-- TAB 4: CROP CALENDAR WITH FERTILIZER SCHEDULE -->
       <section class="tab-pane" id="pane-calendar">
         <div class="calc-container">
           <div class="calc-header">
@@ -460,7 +546,7 @@
         </div>
       </section>
 
-      <!-- TAB 4: NEAREST FERTILIZER SHOP LOCATOR -->
+      <!-- TAB 5: NEAREST FERTILIZER SHOP LOCATOR -->
       <section class="tab-pane" id="pane-locator">
         <div class="calc-container">
           <div class="calc-header">
@@ -489,7 +575,7 @@
         </div>
       </section>
 
-      <!-- TAB 5: AI VISION SCANNER STUDIO -->
+      <!-- TAB 6: AI VISION SCANNER STUDIO -->
       <section class="tab-pane" id="pane-vision">
         <div class="calc-container">
           <div class="calc-header">
@@ -552,79 +638,6 @@
                   <p id="vision-chemical-remedy">Top dress 25 kg/acre Neem-Coated Urea during morning irrigation</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 6: IOT WEATHER & CARBON CREDIT STATION -->
-      <section class="tab-pane" id="pane-weather">
-        <div class="calc-container">
-          <div class="calc-header">
-            <h2>🌤️ IoT Weather Station & Carbon Credit Certification</h2>
-            <p>Real-time micro-climate weather radar, fertilizer leaching risk alerts, and CO₂e carbon offset rewards.</p>
-          </div>
-
-          <div class="calc-grid">
-            <!-- IoT Weather Radar Card -->
-            <div class="card">
-              <h3>IoT Soil & Weather Sensors</h3>
-              <div class="weather-metrics-grid">
-                <div class="mini-card">
-                  <span class="m-label">Soil Moisture</span>
-                  <span class="m-val highlight" id="iot-moisture">48% Optimal</span>
-                </div>
-                <div class="mini-card">
-                  <span class="m-label">Soil Temperature</span>
-                  <span class="m-val" id="iot-soil-temp">24.2 °C</span>
-                </div>
-                <div class="mini-card">
-                  <span class="m-label">Ambient Temp</span>
-                  <span class="m-val" id="iot-ambient-temp">29.5 °C</span>
-                </div>
-                <div class="mini-card">
-                  <span class="m-label">Solar Radiation</span>
-                  <span class="m-val" id="iot-solar">780 W/m²</span>
-                </div>
-              </div>
-
-              <div class="alert-card" style="margin-top: 1rem;">
-                <div class="alert-icon">🌧️</div>
-                <div class="alert-content">
-                  <h5 id="weather-risk-title">AI Rain Leaching Risk: HIGH (80% Rain Tomorrow)</h5>
-                  <p id="weather-advisory">⚠️ Postpone top-dressing Urea today to prevent nitrogen leaching into groundwater.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Carbon Credit Card -->
-            <div class="card carbon-cert-card">
-              <div class="cert-header">
-                <img src="assets/carbon_badge.png" alt="Carbon Badge" class="carbon-badge-img">
-                <div>
-                  <h3>Farmer Soil Carbon Offset Certificate</h3>
-                  <span class="sub-text" id="cert-id">ECO-CARBON-2026-889142</span>
-                </div>
-              </div>
-
-              <div class="carbon-stats-box">
-                <div class="c-stat">
-                  <span>CO₂e Saved / Year</span>
-                  <strong id="carbon-co2">3.12 Tons</strong>
-                </div>
-                <div class="c-stat">
-                  <span>Credits Earned</span>
-                  <strong class="highlight" id="carbon-credits">11.5 Credits</strong>
-                </div>
-                <div class="c-stat">
-                  <span>Estimated Value</span>
-                  <strong id="carbon-value">$212.75 USD</strong>
-                </div>
-              </div>
-
-              <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">
-                By using Neem-coated urea and organic vermicompost on <strong id="carbon-area">2.5 Acres</strong>, your field sequesters carbon back into the soil organic matter.
-              </p>
             </div>
           </div>
         </div>
