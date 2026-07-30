@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AgroPulse Kisan AI - Client Application & REST API Connector
+   AgroPulse Kisan AI - Client Application & REST API Connector (English & Odia)
    ========================================================================== */
 
 const API_BASE_URL = 'http://localhost:5000/api';
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const TRANSLATIONS = {
     en: {
       tagline: "Crop Calendar & Nearest Fertilizer Shop Locator",
-      langLabel: "Language / भाषा:",
+      langLabel: "Language / ଭାଷା:",
       voiceBtn: "Read Out Recommendation (Farmer Voice)",
       modeBtn: "Farmer Easy Mode: OFF",
       tabDiagnostic: "Soil Diagnostic",
@@ -59,109 +59,57 @@ document.addEventListener('DOMContentLoaded', () => {
       calcHeading: "Custom Fertilizer Blend & Quantity Calculator",
       calcSub: "Convert nutrient deficiency requirements (N, P₂O₅, K₂O) into exact commercial bag quantities for any field size."
     },
-    hi: {
-      tagline: "फसल कैलेंडर और निकटतम उर्वरक दुकान लोकेटर",
-      langLabel: "भाषा / Language:",
-      voiceBtn: "सिफारिश बोलकर सुनें (किसान आवाज)",
-      modeBtn: "किसान सरल मोड: बंद",
-      tabDiagnostic: "मिट्टी जांच",
-      tabCalculator: "खाद बोरी कैलकुलेटर",
-      tabOrganic: "जैविक बायो-सुइट",
-      tabCrops: "फसल डेटाबेस",
-      tabAiPrompt: "एआई सहायक",
-      btnSoilCard: "सरकारी मृदा स्वास्थ्य कार्ड",
-      heroTitle: "उच्च पैदावार के लिए स्मार्ट उर्वरक सिफारिश",
-      heroDesc: "रासायनिक शुद्धता को जैविक वर्मीकंपोस्ट, जैव-उर्वरकों और मिट्टी के रोगाणु सुरक्षा के साथ जोड़ता है।",
-      formHeading: "मिट्टी जांच एवं खेत का ब्योरा",
-      badgeLive: "लाइव इंजन",
-      colorPickerLabel: "मिट्टी का रंग चुनें:",
-      presetLabel: "त्वरित सुझाव लोड करें:",
-      labelCrop: "मुख्य फसल",
-      labelStage: "फसल की अवस्था",
-      labelLandSize: "ज़मीन का क्षेत्रफल",
-      labelSoilType: "मिट्टी का प्रकार",
-      divNpTitle: "मुख्य पोषक तत्व (एन.पी.के.)",
-      nameNitrogen: "नाइट्रोजन (N) (किग्रा/हेक्टेयर)",
-      namePhosphorus: "फास्फोरस (P) (किग्रा/हेक्टेयर)",
-      namePotassium: "पोटेशियम (K) (किग्रा/हेक्टेयर)",
-      lvlLow: "कम / कमी",
-      lvlMed: "मध्यम",
-      lvlHigh: "अधिक",
-      lvlOpt: "उत्तम / संतुलित",
-      lvlExc: "अत्यधिक",
-      divChemistry: "मिट्टी रसायन एवं जैविक कार्बन",
-      namePh: "मिट्टी का पीएच (अम्लीय/क्षारीय)",
-      phAcidic: "अम्लीय (<6.0)",
-      phNeutral: "उदासीन (6.0-7.5)",
-      phAlkaline: "क्षारीय (>7.5)",
-      labelOc: "जैविक कार्बन (%)",
-      labelMoisture: "नमी का स्तर (%)",
-      btnCalculate: "बैकएंड एपीआई से सिफारिश प्राप्त करें",
-      headingAssessment: "मृदा स्वास्थ्य सूचकांक मूल्यांकन",
-      chartHeader: "पोषक तत्व स्थिति बनाम फसल आवश्यकता",
-      tableHeader: "संतुलित रासायनिक एवं जैविक खाद सिफारिश",
-      thFertilizer: "खाद / जैविक इनपुट",
-      thCategory: "प्रकार",
-      thPerAcre: "प्रति एकड़",
-      thTotalField: "कुल खेत की मात्रा",
-      thMethod: "देने का तरीका",
-      ecoHeader: "फसल स्वास्थ्य एवं जैविक मृदा कवच",
-      ecoSub: "केचुओं और मिट्टी के मित्र जीवाणुओं की रक्षा करते हुए अधिक उपज देता है।",
-      timelineHeader: "फसल विकास चरणानुसार खाद सारणी",
-      calcHeading: "कस्टम खाद बोरी कैलकुलेटर",
-      calcSub: "अपनी ज़मीन के अनुसार यूरिया, डीएपी और पोटाश की सटीक बोरी की संख्या निकालें।"
-    },
-    es: {
-      tagline: "Calendario de Cultivos y Localizador de Tiendas de Fertilizantes",
-      langLabel: "Idioma / Language:",
-      voiceBtn: "Escuchar Recomendación (Voz)",
-      modeBtn: "Modo Agricultor Fácil: OFF",
-      tabDiagnostic: "Diagnóstico del Suelo",
-      tabCalculator: "Calculadora de Sacos",
-      tabOrganic: "Suite Bio-Orgánica",
-      tabCrops: "Base de Datos Cultivos",
-      tabAiPrompt: "Copiloto IA",
-      btnSoilCard: "Tarjeta Oficial de Salud del Suelo",
-      heroTitle: "Recomendación Inteligente para Alto Rendimiento",
-      heroDesc: "Combina la precisión química con compost orgánico y biofertilizantes para proteger el suelo.",
-      formHeading: "Configuración del Suelo y Campo",
-      badgeLive: "Motor en Vivo",
-      colorPickerLabel: "Color del Suelo:",
-      presetLabel: "Cargar Ajustes Rápidos:",
-      labelCrop: "Cultivo Objetivo",
-      labelStage: "Etapa de Crecimiento",
-      labelLandSize: "Tamaño del Terreno",
-      labelSoilType: "Tipo de Suelo",
-      divNpTitle: "Nutrientes Principales (NPK)",
-      nameNitrogen: "Nitrógeno (kg/ha)",
-      namePhosphorus: "Fósforo (kg/ha)",
-      namePotassium: "Potasio (kg/ha)",
-      lvlLow: "Deficiente / Bajo",
-      lvlMed: "Medio",
-      lvlHigh: "Alto",
-      lvlOpt: "Óptimo",
-      lvlExc: "Exceso",
-      divChemistry: "Química del Suelo y Carbono Orgánico",
-      namePh: "Acidez/Alcalinidad del Suelo (pH)",
-      phAcidic: "Ácido (<6.0)",
-      phNeutral: "Neutro (6.0-7.5)",
-      phAlkaline: "Alcalino (>7.5)",
-      labelOc: "Carbono Orgánico (%)",
-      labelMoisture: "Nivel de Humedad (%)",
-      btnCalculate: "Obtener Recomendación de la API REST",
-      headingAssessment: "Evaluación de Salud del Suelo",
-      chartHeader: "Estado de Nutrientes vs Requisito",
-      tableHeader: "Prescripción Química y Orgánica Balanceada",
-      thFertilizer: "Fertilizante / Bio-Insumo",
-      thCategory: "Tipo",
-      thPerAcre: "Por Acre",
-      thTotalField: "Cantidad Total del Campo",
-      thMethod: "Método de Aplicación",
-      ecoHeader: "Escudo Bio-Orgánico de Salud de Cultivos",
-      ecoSub: "Protege las lombrices de tierra y la biomasa microbiana del suelo.",
-      timelineHeader: "Calendario de Aplicación por Etapas",
-      calcHeading: "Calculadora de Mezcla de Fertilizantes",
-      calcSub: "Convierta los requisitos de nutrientes en sacos comerciales de 50 kg."
+    or: {
+      tagline: "ଫସଲ କ୍ୟାଲେଣ୍ଡର ଓ ନିକଟସ୍ଥ ଖତ ଦୋକାନ ସୂଚନା",
+      langLabel: "ଭାଷା / Language:",
+      voiceBtn: "ସିଫାରିଶ୍ ଶୁଣନ୍ତୁ (କୃଷକ ସ୍ୱର)",
+      modeBtn: "କୃଷକ ସରଳ ମୋଡ୍: ବନ୍ଦ",
+      tabDiagnostic: "ମାଟି ପରୀକ୍ଷା",
+      tabCalculator: "ଖତ କାଲକୁଲେଟର",
+      tabOrganic: "ଜୈବିକ ସୁଇଟ୍",
+      tabCrops: "ଫସଲ ତାଲିକା",
+      tabAiPrompt: "ଏଆଇ ସହାୟକ",
+      btnSoilCard: "ସରକାରୀ ମୃତ୍ତିକା ସ୍ୱାସ୍ଥ୍ୟ କାର୍ଡ",
+      heroTitle: "ଅଧିକ ଅମଳ ପାଇଁ ଉନ୍ନତ ସାର ସିଫାରିଶ୍",
+      heroDesc: "ରାସାୟନିକ ସାର ସହ ଜୈବିକ ଖତ ଓ ଜୀବାଣୁ ରକ୍ଷାକୁ ମିଶାଇ ମାଟିର ଉର୍ବରତା ଏବଂ ଅମଳ ବୃଦ୍ଧି କରେ।",
+      formHeading: "ମାଟି ପରୀକ୍ଷା ଓ ଜମି ବିବରଣୀ",
+      badgeLive: "ଲାଇଭ୍ ଇଞ୍ଜିନ୍",
+      colorPickerLabel: "ମାଟିର ରଙ୍ଗ ବାଛନ୍ତୁ:",
+      presetLabel: "ତୁରନ୍ତ ସୁଝାବ ଲୋଡ୍ କରନ୍ତୁ:",
+      labelCrop: "ମୁଖ୍ୟ ଫସଲ",
+      labelStage: "ଫସଲ ଅବସ୍ଥା",
+      labelLandSize: "ଜମିର ପରିମାଣ",
+      labelSoilType: "ମାଟିର ପ୍ରକାର",
+      divNpTitle: "ମୁଖ୍ୟ ମାଟି ପୋଷକ ତତ୍ତ୍ୱ (ଏନ୍.ପି.କେ.)",
+      nameNitrogen: "ନାଇଟ୍ରୋଜେନ୍ (N) (କିଗ୍ରା/ହେକ୍ଟର)",
+      namePhosphorus: "ଫସଫରସ୍ (P) (କିଗ୍ରା/ହେକ୍ଟର)",
+      namePotassium: "ପୋଟାସିଅମ୍ (K) (କିଗ୍ରା/ହେକ୍ଟର)",
+      lvlLow: "କମ୍ / ଅଭାବ",
+      lvlMed: "ମଧ୍ୟମ",
+      lvlHigh: "ଅଧିକ",
+      lvlOpt: "ସନ୍ତୁଳିତ / ଉତ୍ତମ",
+      lvlExc: "ଅତ୍ୟଧିକ",
+      divChemistry: "ମାଟି ରସାୟନ ଓ ଜୈବିକ କାର୍ବନ୍",
+      namePh: "ମାଟିର ପିଏଚ୍ (pH ਅੰਕ)",
+      phAcidic: "ଅମ୍ଳୀୟ (<6.0)",
+      phNeutral: "ସାଧାରଣ (6.0-7.5)",
+      phAlkaline: "କ୍ଷାରୀୟ (>7.5)",
+      labelOc: "ଜୈବିକ କାର୍ବନ୍ (%)",
+      labelMoisture: "ଓଦା ପରିମାଣ (%)",
+      btnCalculate: "ସିଫାରିଶ୍ ଗ୍ରହଣ କରନ୍ତୁ",
+      headingAssessment: "ମୃତ୍ତିକା ସ୍ୱାସ୍ଥ୍ୟ ସୂଚକାଙ୍କ ମୂଲ୍ୟାଙ୍କନ",
+      chartHeader: "ପୋଷକ ତତ୍ତ୍ୱ ସ୍ଥିତି ଓ ଫସଲ ଆବଶ୍ୟକତା",
+      tableHeader: "ସନ୍ତୁଳିତ ରାସାୟନିକ ଓ ଜୈବିକ ସାର ତାଲିକା",
+      thFertilizer: "ସାର / ଜୈବିକ ଉପାଦାନ",
+      thCategory: "ପ୍ରକାର",
+      thPerAcre: "ଏକର ପ୍ରତି",
+      thTotalField: "ମୋଟ ଜମିର ପରିମାଣ",
+      thMethod: "ଦେବାର ପ୍ରଣାଳୀ",
+      ecoHeader: "ଫସଲ ସ୍ୱାସ୍ଥ୍ୟ ଓ ଜୈବିକ ମୃତ୍ତିକା କବଚ",
+      ecoSub: "ଜିଆ ଓ ଉପକାରୀ ଜୀବାଣୁଙ୍କୁ ସୁରକ୍ଷିତ ରଖି ଅଧିକ ଅମଳ ଦିଏ।",
+      timelineHeader: "ଫସଲ ପର୍ଯ୍ୟାୟାନୁସାରେ ସାର ସୂଚୀ",
+      calcHeading: "ଖତ ବୋସ୍ତା କାଲକୁଲେଟର",
+      calcSub: "ନିଜ ଜମି ପାଇଁ ୟୁରିଆ, ଡିଏପି ଓ ପୋଟାସ୍ର ସଠିକ୍ ବୋସ୍ତା ସଂଖ୍ୟା ହିସାବ କରନ୍ତୁ।"
     }
   };
 
@@ -257,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchCropCalendarData('wheat');
   fetchDealersData();
 
-  // Multi-Language Switcher
+  // Multi-Language Switcher (English & Odia)
   elSelectLang.addEventListener('change', (e) => {
     state.lang = e.target.value;
     applyLanguageTranslations();
@@ -271,11 +219,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (dict[key]) el.textContent = dict[key];
     });
 
-    if (state.lang === 'hi') elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 सिफारिश बोलकर सुनें (किसान आवाज)`;
-    else if (state.lang === 'es') elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 Escuchar Recomendación (Voz)`;
+    if (state.lang === 'or') elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 ସିଫାରିଶ୍ ଶୁଣନ୍ତୁ (କୃଷକ ସ୍ୱର)`;
     else elBtnVoice.innerHTML = `<span class="pulse-ring"></span> 🔊 Read Out Recommendation (Farmer Voice)`;
 
-    const modeText = state.farmerMode ? (state.lang === 'hi' ? 'किसान सरल मोड: चालू' : 'Farmer Easy Mode: ON') : (state.lang === 'hi' ? 'किसान सरल मोड: बंद' : 'Farmer Easy Mode: OFF');
+    const modeText = state.farmerMode ? (state.lang === 'or' ? 'କୃଷକ ସରଳ ମୋଡ୍: ଚାଲୁ' : 'Farmer Easy Mode: ON') : (state.lang === 'or' ? 'କୃଷକ ସରଳ ମୋଡ୍: ବନ୍ଦ' : 'Farmer Easy Mode: OFF');
     elBtnMode.innerHTML = `👨‍🌾 ${modeText}`;
   }
 
@@ -284,11 +231,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const areaText = `${state.landSize} ${state.unit}`;
-      let speechText = `Hello Farmer! For your ${state.crop} crop on ${areaText}, we recommend a balanced prescription of Neem Coated Urea, DAP, and organic vermicompost to protect soil health and maximize yield.`;
+      let speechText = state.lang === 'or' 
+        ? `ନମସ୍କାର କୃଷକ ଭାଇ, ଆପଣଙ୍କର ${areaText} ଜମି ପାଇଁ ନିମ୍ ୟୁରିଆ, ଡିଏପି ଏବଂ ଜୈବିକ ଖତର ସନ୍ତୁଳିତ ବ୍ୟବହାର କରିବାକୁ ସିଫାରିଶ୍ କରାଯାଉଛି।`
+        : `Hello Farmer! For your ${state.crop} crop on ${areaText}, we recommend a balanced prescription of Neem Coated Urea, DAP, and organic vermicompost to protect soil health and maximize yield.`;
+      
       const utterance = new SpeechSynthesisUtterance(speechText);
       utterance.rate = 0.9;
       window.speechSynthesis.speak(utterance);
-      showToast("🔊 Speaking recommendation aloud...");
+      showToast(state.lang === 'or' ? "🔊 ସିଫାରିଶ ଶୁଣାଯାଉଛି..." : "🔊 Speaking recommendation aloud...");
     }
   });
 
@@ -347,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   elBtnRecalculate.addEventListener('click', () => {
     calculateAndRender();
-    showToast('⚡ Fetched fresh prescription from Backend REST API!');
+    showToast(state.lang === 'or' ? '⚡ ନୂତନ ସିଫାରିଶ୍ ଫେଚ୍ ହୋଇଛି!' : '⚡ Fetched fresh prescription from Backend REST API!');
   });
 
   elThemeToggle.addEventListener('click', () => {
@@ -407,13 +357,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const healthStatusEl = document.getElementById('res-health-status');
     if (shiScore >= 80) {
-      healthStatusEl.textContent = 'Optimal Health';
+      healthStatusEl.textContent = state.lang === 'or' ? 'ଉତ୍ତମ ସ୍ୱାସ୍ଥ୍ୟ' : 'Optimal Health';
       healthStatusEl.className = 'badge badge-status optimal';
     } else if (shiScore >= 60) {
-      healthStatusEl.textContent = 'Moderate Balance';
+      healthStatusEl.textContent = state.lang === 'or' ? 'ମଧ୍ୟମ ସନ୍ତୁଳନ' : 'Moderate Balance';
       healthStatusEl.className = 'badge badge-status';
     } else {
-      healthStatusEl.textContent = 'High Deficit Alert';
+      healthStatusEl.textContent = state.lang === 'or' ? 'ସତର୍କତା ଅଭାବ' : 'High Deficit Alert';
       healthStatusEl.className = 'badge badge-status deficit';
     }
 
@@ -476,9 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // =========================================================================
-  // 1. SOIL HEALTH IMPROVEMENT TIPS REST API (GET /api/soil-tips)
-  // =========================================================================
+  // SOIL TIPS API
   async function fetchSoilTipsData() {
     try {
       const res = await fetch(`${API_BASE_URL}/soil-tips`);
@@ -507,9 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // =========================================================================
-  // 2. CROP CALENDAR REST API (GET /api/crop-calendar)
-  // =========================================================================
+  // CROP CALENDAR API
   const calendarCropSelect = document.getElementById('calendar-crop-select');
   if (calendarCropSelect) {
     calendarCropSelect.addEventListener('change', (e) => {
@@ -542,9 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // =========================================================================
-  // 3. NEAREST FERTILIZER DEALER LOCATOR REST API (GET /api/dealers)
-  // =========================================================================
+  // NEAREST DEALER LOCATOR API
   async function fetchDealersData() {
     try {
       const res = await fetch(`${API_BASE_URL}/dealers`);
