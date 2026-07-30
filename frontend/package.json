@@ -1,0 +1,8 @@
+{
+  "name": "agropulse-frontend",
+  "version": "1.0.0",
+  "description": "Farmer-friendly client app for AgroPulse Fertilizer System",
+  "scripts": {
+    "start": "npx serve -l 3000 ."
+  }
+}

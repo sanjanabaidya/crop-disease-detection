@@ -1,0 +1,11 @@
+{
+  "name": "agropulse-kisan-fullstack",
+  "version": "1.0.0",
+  "description": "Fullstack AgroPulse Kisan - Node.js Express REST API backend & Frontend Web Application",
+  "main": "backend/server.js",
+  "type": "module",
+  "scripts": {
+    "start:backend": "node backend/server.js",
+    "start:frontend": "npx serve -l 3000 frontend"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "agropulse-backend",
+  "version": "1.0.0",
+  "description": "Node.js Express REST API backend for AgroPulse Fertilizer Recommendation System",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.22.2"
+  }
+}

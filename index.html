@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-mode="standard">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroPulse Kisan | Farmer-Friendly Precision & Eco-Organic Fertilizer System</title>
+  <meta name="description" content="Simple, eco-friendly precision soil diagnostic and organic-chemical fertilizer recommendation system for farmers. High yield and soil health protection.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Farmer Accessibility Bar -->
+    <div class="farmer-top-bar">
+      <div class="lang-selector-group">
+        <label for="select-lang">🌐 <span data-i18n="langLabel">Language / भाषा:</span></label>
+        <select id="select-lang" class="select-lang-dropdown">
+          <option value="en" selected>English</option>
+          <option value="hi">हिंदी (Hindi)</option>
+          <option value="es">Español (Spanish)</option>
+        </select>
+      </div>
+
+      <div class="voice-assistant-group">
+        <button id="btn-voice-assistant" class="btn-voice" title="Listen to recommendation read out loud">
+          <span class="pulse-ring"></span>
+          🔊 <span data-i18n="voiceBtn">Read Out Recommendation (Farmer Voice)</span>
+        </button>
+      </div>
+
+      <div class="mode-toggle-group">
+        <button id="btn-toggle-farmer-mode" class="btn-mode">
+          👨‍🌾 <span data-i18n="modeBtn">Farmer Easy Mode: OFF</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L4.5 20.5h15L12 2z" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 6.5v10M8.5 13.5l7-3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>AgroPulse <span>Kisan</span></h1>
+          <p data-i18n="tagline">Farmer Precision & Eco-Organic Fertilizer System</p>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" role="tablist">
+        <button class="nav-btn active" data-tab="diagnostic" id="tab-diagnostic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          <span data-i18n="tabDiagnostic">Soil Diagnostic Studio</span>
+        </button>
+        <button class="nav-btn" data-tab="calculator" id="tab-calculator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
+          <span data-i18n="tabCalculator">Dosage Calculator</span>
+        </button>
+        <button class="nav-btn" data-tab="organic" id="tab-organic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10s10-4.5 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/><path d="M12 6v6l4 2"/></svg>
+          <span data-i18n="tabOrganic">Eco-Organic Bio-Suite</span>
+        </button>
+        <button class="nav-btn" data-tab="crops" id="tab-crops">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span data-i18n="tabCrops">Crop Database</span>
+        </button>
+        <button class="nav-btn" data-tab="ai-prompt" id="tab-ai-prompt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12L2.1 12a10 10 0 0 1 9.9-10v10z"/><path d="M20.2 5.1L12 12V2a10 10 0 0 1 8.2 3.1z"/></svg>
+          <span data-i18n="tabAiPrompt">AI Prompt Suite</span>
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-icon" id="theme-toggle" title="Toggle Light/Dark Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <button class="btn-secondary" id="btn-open-soil-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span data-i18n="btnSoilCard">Official Soil Health Card</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-viewport">
+
+      <!-- TAB 1: DIAGNOSTIC STUDIO -->
+      <section class="tab-pane active" id="pane-diagnostic">
+        
+        <!-- Hero Visual Banner -->
+        <div class="farmer-hero-card" style="background-image: linear-gradient(to right, rgba(11, 19, 32, 0.92), rgba(11, 19, 32, 0.55)), url('assets/hero_banner.png');">
+          <div class="hero-content">
+            <span class="hero-badge">🌱 Healthy Crops & Soil Shield</span>
+            <h2 data-i18n="heroTitle">Smart Fertilizer Recommendation for High Yield</h2>
+            <p data-i18n="heroDesc">Combines chemical precision with eco-organic compost, bio-fertilizers, and soil microbial protection to ensure high crop production while keeping soil fertile for generations.</p>
+          </div>
+          <div class="hero-quick-stats">
+            <div class="stat-pill">
+              <span class="pill-label">Microbial Health</span>
+              <span class="pill-val green" id="hero-microbial-val">92% Healthy</span>
+            </div>
+            <div class="stat-pill">
+              <span class="pill-label">Eco Ratio</span>
+              <span class="pill-val gold">30% Organic</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="workspace-grid">
+          
+          <!-- Control Side Panel -->
+          <aside class="panel controls-panel">
+            <div class="panel-header">
+              <h2 data-i18n="formHeading">Soil Test & Field Setup</h2>
+              <span class="badge" data-i18n="badgeLive">Live Engine</span>
+            </div>
+
+            <!-- Visual Soil Color Picker -->
+            <div class="soil-color-picker-box">
+              <label><strong data-i18n="colorPickerLabel">Pick Soil Visual Color:</strong></label>
+              <div class="soil-color-swatches">
+                <button class="swatch swatch-black active" data-color="black" title="Black Organic Soil (Rich OC)">
+                  <span>Black</span>
+                </button>
+                <button class="swatch swatch-brown" data-color="brown" title="Brown Loamy Soil (Balanced)">
+                  <span>Brown</span>
+                </button>
+                <button class="swatch swatch-red" data-color="red" title="Red Laterite Soil (Acidic/Iron)">
+                  <span>Red</span>
+                </button>
+                <button class="swatch swatch-yellow" data-color="yellow" title="Sandy Yellow Soil (Low NPK)">
+                  <span>Yellow</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="preset-strip">
+              <label data-i18n="presetLabel">Load Quick Presets:</label>
+              <div class="preset-buttons">
+                <button class="btn-preset" data-preset="wheat-depleted">🌾 Low N Wheat</button>
+                <button class="btn-preset" data-preset="paddy-balanced">🍚 Balanced Rice</button>
+                <button class="btn-preset" data-preset="acidic-citrus">🍊 Acidic Citrus</button>
+                <button class="btn-preset" data-preset="alkaline-cotton">☁️ High pH Cotton</button>
+              </div>
+            </div>
+
+            <form id="soil-form" class="soil-form">
+              <!-- Crop & Land Setup -->
+              <div class="form-group-row">
+                <div class="form-group">
+                  <label for="select-crop" data-i18n="labelCrop">Target Crop</label>
+                  <select id="select-crop" class="form-select">
+                    <!-- Dynamically Populated -->
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="select-stage" data-i18n="labelStage">Growth Stage</label>
+                  <select id="select-stage" class="form-select">
+                    <option value="sowing">Sowing / Basal</option>
+                    <option value="vegetative" selected>Vegetative Growth</option>
+                    <option value="flowering">Flowering & Fruit Set</option>
+                    <option value="maturation">Maturation & Harvesting</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group-row">
+                <div class="form-group">
+                  <label for="input-land-size" data-i18n="labelLandSize">Land Size</label>
+                  <div class="input-unit-group">
+                    <input type="number" id="input-land-size" value="2.5" min="0.1" step="0.1" class="form-control">
+                    <select id="select-unit" class="select-unit">
+                      <option value="acre" selected>Acres</option>
+                      <option value="hectare">Hectares</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="select-soil-type" data-i18n="labelSoilType">Soil Texture/Type</label>
+                  <select id="select-soil-type" class="form-select">
+                    <option value="loamy" selected>Loamy Soil (Ideal)</option>
+                    <option value="clay">Clay Soil (High Retention)</option>
+                    <option value="sandy">Sandy Soil (Low Retention)</option>
+                    <option value="silt">Silt Soil</option>
+                    <option value="peaty">Peaty / Organic rich</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="divider"><span data-i18n="divNp-title">Primary Soil Nutrients (NPK)</span></div>
+
+              <!-- Nitrogen Slider -->
+              <div class="slider-card">
+                <div class="slider-header">
+                  <span class="nutrient-title n-color">
+                    <span class="symbol">N</span> <span data-i18n="nameNitrogen">Nitrogen (kg/ha)</span>
+                  </span>
+                  <span class="value-display" id="val-n">140</span>
+                </div>
+                <input type="range" id="range-n" min="0" max="400" value="140" class="custom-range range-n">
+                <div class="range-labels">
+                  <span data-i18n="lvlLow">Deficient (&lt;150)</span>
+                  <span data-i18n="lvlMed">Medium (150-250)</span>
+                  <span data-i18n="lvlHigh">High (&gt;250)</span>
+                </div>
+              </div>
+
+              <!-- Phosphorus Slider -->
+              <div class="slider-card">
+                <div class="slider-header">
+                  <span class="nutrient-title p-color">
+                    <span class="symbol">P</span> <span data-i18n="namePhosphorus">Phosphorus (kg/ha)</span>
+                  </span>
+                  <span class="value-display" id="val-p">22</span>
+                </div>
+                <input type="range" id="range-p" min="0" max="120" value="22" class="custom-range range-p">
+                <div class="range-labels">
+                  <span data-i18n="lvlLow">Low (&lt;20)</span>
+                  <span data-i18n="lvlOpt">Optimal (20-50)</span>
+                  <span data-i18n="lvlExc">Excess (&gt;50)</span>
+                </div>
+              </div>
+
+              <!-- Potassium Slider -->
+              <div class="slider-card">
+                <div class="slider-header">
+                  <span class="nutrient-title k-color">
+                    <span class="symbol">K</span> <span data-i18n="namePotassium">Potassium (kg/ha)</span>
+                  </span>
+                  <span class="value-display" id="val-k">180</span>
+                </div>
+                <input type="range" id="range-k" min="0" max="450" value="180" class="custom-range range-k">
+                <div class="range-labels">
+                  <span data-i18n="lvlLow">Low (&lt;140)</span>
+                  <span data-i18n="lvlOpt">Optimal (140-280)</span>
+                  <span data-i18n="lvlHigh">High (&gt;280)</span>
+                </div>
+              </div>
+
+              <div class="divider"><span data-i18n="divChemistry">Soil Chemistry & Organic Carbon</span></div>
+
+              <!-- Soil pH Slider -->
+              <div class="slider-card">
+                <div class="slider-header">
+                  <span class="nutrient-title ph-color">
+                    <span class="symbol">pH</span> <span data-i18n="namePh">Soil Acidity/Alkalinity</span>
+                  </span>
+                  <span class="value-display" id="val-ph">6.5</span>
+                </div>
+                <input type="range" id="range-ph" min="3.5" max="10.0" step="0.1" value="6.5" class="custom-range range-ph">
+                <div class="ph-gradient-bar"></div>
+                <div class="range-labels">
+                  <span data-i18n="phAcidic">Acidic (&lt;6.0)</span>
+                  <span data-i18n="phNeutral">Neutral (6.0-7.5)</span>
+                  <span data-i18n="phAlkaline">Alkaline (&gt;7.5)</span>
+                </div>
+              </div>
+
+              <div class="form-group-row">
+                <div class="form-group">
+                  <label for="range-oc" data-i18n="labelOc">Organic Carbon (%)</label>
+                  <div class="range-with-val">
+                    <input type="range" id="range-oc" min="0.1" max="2.0" step="0.05" value="0.55" class="custom-range">
+                    <span id="val-oc">0.55%</span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="range-moisture" data-i18n="labelMoisture">Moisture Level (%)</label>
+                  <div class="range-with-val">
+                    <input type="range" id="range-moisture" min="10" max="90" value="45" class="custom-range">
+                    <span id="val-moisture">45%</span>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" id="btn-recalculate" class="btn-primary full-width">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                <span data-i18n="btnCalculate">Calculate Precision & Organic Recommendation</span>
+              </button>
+            </form>
+          </aside>
+
+          <!-- Diagnostic Results Side -->
+          <section class="panel results-panel">
+            
+            <!-- Summary Overview Banner -->
+            <div class="score-banner">
+              <div class="score-radial">
+                <svg class="radial-chart" viewBox="0 0 120 120">
+                  <circle class="bg" cx="60" cy="60" r="50"/>
+                  <circle class="meter" id="shi-meter" cx="60" cy="60" r="50" stroke-dasharray="314" stroke-dashoffset="90"/>
+                </svg>
+                <div class="score-text">
+                  <span class="score-num" id="shi-score">78</span>
+                  <span class="score-label">SHI Index</span>
+                </div>
+              </div>
+              <div class="score-details">
+                <div class="crop-badge-row">
+                  <span class="badge badge-crop" id="res-crop-name">Wheat (Triticum aestivum)</span>
+                  <span class="badge badge-status" id="res-health-status">Moderate Balance</span>
+                  <span class="badge badge-organic" id="res-organic-tag">🌱 Eco-Balanced</span>
+                </div>
+                <h3 data-i18n="headingAssessment">Soil Health Index Assessment</h3>
+                <p id="res-summary-desc">Nitrogen levels are currently 26% below optimal requirement for vegetative stage. Recommended split fertilizer with organic compost for root protection.</p>
+                
+                <div class="metric-mini-cards">
+                  <div class="mini-card">
+                    <span class="m-label">pH Status</span>
+                    <span class="m-val" id="res-ph-status">Optimal (6.5)</span>
+                  </div>
+                  <div class="mini-card">
+                    <span class="m-label">Total Field</span>
+                    <span class="m-val" id="res-land-display">2.5 Acres</span>
+                  </div>
+                  <div class="mini-card">
+                    <span class="m-label">Yield Outlook</span>
+                    <span class="m-val highlight" id="res-yield-boost">+18% Potential</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Visual Deficit Radar & Bar Chart -->
+            <div class="card chart-card">
+              <div class="card-header">
+                <h4 data-i18n="chartHeader">Nutrient Status vs Crop Requirement</h4>
+                <span class="sub-text">(kg/hectare baseline)</span>
+              </div>
+              
+              <div class="nutrient-bars-container">
+                <!-- Nitrogen Bar -->
+                <div class="bar-group">
+                  <div class="bar-header">
+                    <span class="b-title n-color">Nitrogen (N)</span>
+                    <span class="b-stats" id="stats-n">Current: 140 | Ideal: 190 kg/ha</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill fill-n" id="bar-n" style="width: 73%;"></div>
+                    <div class="target-marker" id="target-n" style="left: 100%;" title="Target Level"></div>
+                  </div>
+                  <span class="deficit-badge" id="def-n">-50 kg/ha Deficit</span>
+                </div>
+
+                <!-- Phosphorus Bar -->
+                <div class="bar-group">
+                  <div class="bar-header">
+                    <span class="b-title p-color">Phosphorus (P₂O₅)</span>
+                    <span class="b-stats" id="stats-p">Current: 22 | Ideal: 25 kg/ha</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill fill-p" id="bar-p" style="width: 88%;"></div>
+                    <div class="target-marker" id="target-p" style="left: 100%;"></div>
+                  </div>
+                  <span class="deficit-badge balanced" id="def-p">Balanced</span>
+                </div>
+
+                <!-- Potassium Bar -->
+                <div class="bar-group">
+                  <div class="bar-header">
+                    <span class="b-title k-color">Potassium (K₂O)</span>
+                    <span class="b-stats" id="stats-k">Current: 180 | Ideal: 160 kg/ha</span>
+                  </div>
+                  <div class="bar-track">
+                    <div class="bar-fill fill-k" id="bar-k" style="width: 100%;"></div>
+                    <div class="target-marker" id="target-k" style="left: 88%;"></div>
+                  </div>
+                  <span class="deficit-badge optimal" id="def-k">Optimal</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chemical + Organic Balanced Recommendation Table -->
+            <div class="card table-card">
+              <div class="card-header">
+                <h4 data-i18n="tableHeader">Balanced Chemical & Eco-Organic Prescription</h4>
+                <div class="table-actions">
+                  <span class="tag">Total Area: <strong id="prescription-area">2.5 Acres</strong></span>
+                </div>
+              </div>
+
+              <div class="table-responsive">
+                <table class="prescription-table">
+                  <thead>
+                    <tr>
+                      <th data-i18n="thFertilizer">Fertilizer / Bio-Input</th>
+                      <th data-i18n="thCategory">Type</th>
+                      <th data-i18n="thPerAcre">Per Acre</th>
+                      <th data-i18n="thTotalField">Total Field Quantity</th>
+                      <th data-i18n="thMethod">Application Method</th>
+                    </tr>
+                  </thead>
+                  <tbody id="prescription-tbody">
+                    <!-- Dynamically populated via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Eco-Healthy Soil Protection Shield -->
+            <div class="card eco-shield-card">
+              <div class="shield-header">
+                <span class="shield-icon">🌿</span>
+                <div>
+                  <h4 data-i18n="ecoHeader">Crop Health & Bio-Organic Soil Shield</h4>
+                  <p class="sub-text" data-i18n="ecoSub">Protects soil earthworms, microbial biomass, and root health while maintaining maximum crop yields.</p>
+                </div>
+              </div>
+              <div class="eco-grid" id="eco-grid-container">
+                <!-- Dynamically Populated -->
+              </div>
+            </div>
+
+            <!-- Split Application Schedule Timeline -->
+            <div class="card timeline-card">
+              <div class="card-header">
+                <h4 data-i18n="timelineHeader">Split Application Growth Schedule</h4>
+                <span class="sub-text">Optimized to prevent runoff and maximize crop absorption</span>
+              </div>
+              <div class="timeline-stepper" id="timeline-stepper">
+                <!-- Dynamically Populated -->
+              </div>
+            </div>
+
+            <!-- Special Soil Amendment & Agronomy Tips -->
+            <div class="card alert-card" id="soil-amendment-card">
+              <div class="alert-icon">💡</div>
+              <div class="alert-content">
+                <h5 id="amendment-title">Soil Conditioning Advisory</h5>
+                <p id="amendment-text">Soil pH is currently balanced at 6.5. Standard fertilizer availability is at peak efficiency (95-100%). No lime or gypsum treatment required at this time.</p>
+              </div>
+            </div>
+
+          </section>
+        </div>
+      </section>
+
+      <!-- TAB 2: DOSAGE CALCULATOR STUDIO -->
+      <section class="tab-pane" id="pane-calculator">
+        <div class="calc-container">
+          <div class="calc-header">
+            <h2 data-i18n="calcHeading">Custom Fertilizer Blend & Quantity Calculator</h2>
+            <p data-i18n="calcSub">Convert nutrient deficiency requirements (N, P₂O₅, K₂O) into exact commercial bag quantities for any field size.</p>
+          </div>
+
+          <div class="calc-grid">
+            <div class="card calc-input-card">
+              <h3>Required Nutrient Target</h3>
+              <div class="form-group">
+                <label>Target Land Area</label>
+                <div class="input-unit-group">
+                  <input type="number" id="calc-area" value="5" min="0.1" step="0.5" class="form-control">
+                  <select id="calc-unit" class="select-unit">
+                    <option value="acre">Acres</option>
+                    <option value="hectare">Hectares</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Desired N (Nitrogen) kg/acre</label>
+                <input type="number" id="calc-req-n" value="50" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Desired P₂O₅ (Phosphorus) kg/acre</label>
+                <input type="number" id="calc-req-p" value="20" class="form-control">
+              </div>
+              <div class="form-group">
+                <label>Desired K₂O (Potassium) kg/acre</label>
+                <input type="number" id="calc-req-k" value="30" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label>Preferred Combination</label>
+                <select id="calc-mode" class="form-select">
+                  <option value="dap-urea-mop">Neem Coated Urea + DAP + Muriate of Potash (MOP)</option>
+                  <option value="npk-complex">Complex NPK 19-19-19 + Neem Urea</option>
+                  <option value="ssp-urea-mop">Single Superphosphate (SSP) + Urea + MOP</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="card calc-results-card">
+              <h3>Bag Calculation Output (50kg Bags)</h3>
+              <div class="bag-grid" id="calc-bag-grid">
+                <!-- Dynamically generated -->
+              </div>
+              
+              <div class="cost-summary-box">
+                <h4>Estimated Cost Breakdown</h4>
+                <div class="cost-row">
+                  <span>Total Fertilizer Weight:</span>
+                  <strong id="calc-total-weight">450 kg</strong>
+                </div>
+                <div class="cost-row">
+                  <span>Total 50kg Bags Needed:</span>
+                  <strong id="calc-total-bags">9 Bags</strong>
+                </div>
+                <div class="cost-row highlight">
+                  <span>Estimated Total Cost (USD / Est):</span>
+                  <strong id="calc-total-cost">$185.00</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: ECO-ORGANIC BIO-SUITE -->
+      <section class="tab-pane" id="pane-organic">
+        <div class="crops-container">
+          <div class="crops-header">
+            <h2>Eco-Organic Bio-Fertilizer & Soil Health Suite</h2>
+            <p>100% natural, sustainable, and soil-restorative organic practices for long-term farm prosperity.</p>
+          </div>
+
+          <div class="crops-grid">
+            <div class="crop-card">
+              <div class="crop-card-header">
+                <div class="crop-icon-bubble">🪱</div>
+                <div>
+                  <h3>Vermicompost / Earthworm Castings</h3>
+                  <p>Rich in humus, microbial enzymes, and trace elements.</p>
+                </div>
+              </div>
+              <p>Replaces up to 25% of synthetic Nitrogen demand while improving soil water retention by 40%.</p>
+              <div class="badge badge-organic">Dosage: 2-3 Tons / Acre</div>
+            </div>
+
+            <div class="crop-card">
+              <div class="crop-card-header">
+                <div class="crop-icon-bubble">🧪</div>
+                <div>
+                  <h3>Azotobacter & PSB Bio-Fertilizer</h3>
+                  <p>Atmospheric Nitrogen-fixing & Phosphorus-solubilizing bacteria.</p>
+                </div>
+              </div>
+              <p>Fixes 20-30 kg atmospheric N/ha naturally and unlocks bound soil Phosphorus.</p>
+              <div class="badge badge-organic">Dosage: 200 ml / Acre Liquid Culture</div>
+            </div>
+
+            <div class="crop-card">
+              <div class="crop-card-header">
+                <div class="crop-icon-bubble">🌿</div>
+                <div>
+                  <h3>Neem-Coated Urea (Slow Release)</h3>
+                  <p>Neem oil coating prevents nitrogen leaching into groundwater.</p>
+                </div>
+              </div>
+              <p>Increases nitrogen uptake efficiency by 15-20% and acts as a natural soil pest repellent.</p>
+              <div class="badge badge-status">Eco-Standard Fertilizer</div>
+            </div>
+
+            <div class="crop-card">
+              <div class="crop-card-header">
+                <div class="crop-icon-bubble">🌾</div>
+                <div>
+                  <h3>Green Manuring (Dhaincha / Sesbania)</h3>
+                  <p>Cover crop plowed back into soil before main crop sowing.</p>
+                </div>
+              </div>
+              <p>Adds up to 60-80 kg natural N/ha and dramatically enhances soil organic carbon %.</p>
+              <div class="badge badge-organic">Practice: 45 Days Pre-Sowing</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: CROP DATABASE -->
+      <section class="tab-pane" id="pane-crops">
+        <div class="crops-container">
+          <div class="crops-header">
+            <h2>Crop Nutrient Requirement Database</h2>
+            <p>Explore ideal NPK benchmarks, critical growth stages, pH tolerance, and micro-nutrient sensitivities for major crops.</p>
+            <div class="search-box">
+              <input type="text" id="crop-search-input" placeholder="Search crop (e.g. Wheat, Tomato, Cotton)..." class="form-control">
+            </div>
+          </div>
+
+          <div class="crops-grid" id="crops-cards-grid">
+            <!-- Dynamically populated from JS crop database -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: AI PROMPT SUITE -->
+      <section class="tab-pane" id="pane-ai-prompt">
+        <div class="ai-prompt-container">
+          <div class="ai-header">
+            <h2>Fertilizer Recommendation AI Prompt Suite</h2>
+            <p>Use these battle-tested AI system prompts to build, fine-tune, or query AI models (Gemini, ChatGPT, Claude) for precision agronomy recommendations.</p>
+          </div>
+
+          <div class="ai-prompt-grid">
+
+            <!-- Prompt 1: System Master Prompt -->
+            <div class="card prompt-card">
+              <div class="prompt-card-header">
+                <div>
+                  <span class="prompt-badge">System Prompt</span>
+                  <h3>Master AI Fertilizer Recommendation Agent</h3>
+                </div>
+                <button class="btn-secondary btn-copy" data-copy-target="prompt-master-text">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  Copy Prompt
+                </button>
+              </div>
+              <pre class="prompt-code-block" id="prompt-master-text">You are AgroBot AI, a world-class Agronomist, Soil Scientist, and Precision Fertilizer Recommendation Specialist.
+
+### CORE OBJECTIVE:
+Given a user's soil test parameters, geographic location/climate, target crop, land size, and growth stage, generate an accurate, scientific, and actionable Fertilizer Prescription and Soil Health Management Plan.
+
+### INPUT PARAMETERS TO REQUEST / ANALYZE:
+1. Soil Nutrients: Nitrogen (N), Phosphorus (P), Potassium (K) (in kg/ha or ppm)
+2. Soil Chemistry: Soil pH, Electrical Conductivity (EC in dS/m), Organic Carbon (%)
+3. Crop & Land Context: Target Crop, Crop Variety, Land Area (Acres/Hectares), Growth Stage (Sowing, Vegetative, Flowering, Fruiting), Irrigation Method
+4. Soil Type: Sandy, Clay, Loamy, Silt, Acidic/Alkaline
+
+### RECOMMENDATION ALGORITHM STEPS:
+1. Calculate Deficit: Nutrient Deficit = Target Crop Requirement - Current Soil Test Level.
+2. Determine Straight & Complex Fertilizers:
+   - Nitrogen sources: Urea (46% N), Ammonium Sulfate (21% N).
+   - Phosphorus sources: DAP (18% N, 46% P2O5), SSP (16% P2O5).
+   - Potassium sources: MOP / Potassium Chloride (60% K2O), Potassium Sulfate (50% K2O).
+3. Adjust for Soil pH:
+   - If pH < 6.0 (Acidic): Recommend Agricultural Lime / Dolomite & Rock Phosphate.
+   - If pH > 7.5 (Alkaline): Recommend Gypsum (CaSO4) & Elemental Sulfur.
+4. Calculate Split Application Schedule:
+   - Basal (50% N, 100% P, 50% K)
+   - First Top Dressing (25% N, 25% K)
+   - Second Top Dressing (25% N, 25% K)
+5. Include Micronutrients & Bio-Fertilizers: Zinc Sulfate, Boron, Azotobacter / PSB / Mycorrhiza.
+
+### OUTPUT FORMAT REQUIREMENTS:
+Format all responses in clean Markdown with:
+1. **Soil Health Summary**: Visual status (Deficient / Optimal / Excess) for N, P, K, pH.
+2. **Fertilizer Prescription Table**: Fertilizer Name, Quantity per Acre, Application Method, Timing.
+3. **Application Timeline**: Step-by-step guidance for Basal, Vegetative, and Flowering stages.
+4. **Organic & Eco-friendly Alternatives**: Vermicompost, Green Manure, Bio-fertilizer supplements.
+5. **Precautions & Best Practices**: Water management, soil compaction prevention, fertigation instructions.</pre>
+            </div>
+
+            <!-- Prompt 2: Dynamic Live Prompt Generator -->
+            <div class="card prompt-card highlight-card">
+              <div class="prompt-card-header">
+                <div>
+                  <span class="prompt-badge live">Live Dynamic Generator</span>
+                  <h3>Context-Aware AI Query (Auto-Generated from Current Soil Diagnostic)</h3>
+                </div>
+                <button class="btn-primary btn-copy" id="btn-copy-dynamic-prompt">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                  Copy Live Prompt
+                </button>
+              </div>
+              <p class="prompt-desc">This prompt is automatically constructed using your active soil input values from the Soil Diagnostic Studio tab.</p>
+              <pre class="prompt-code-block" id="prompt-dynamic-text">Generating live prompt based on current soil parameters...</pre>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- OFFICIAL SOIL HEALTH CARD MODAL / PRINT PREVIEW -->
+    <div class="modal-overlay" id="soil-card-modal">
+      <div class="modal-content soil-health-card-paper">
+        <button class="modal-close" id="btn-close-modal">&times;</button>
+        
+        <div class="shc-header">
+          <div class="shc-seal">
+            <img src="assets/official_seal.png" alt="Official Seal">
+          </div>
+          <div class="shc-title-block">
+            <h2>OFFICIAL FARMER SOIL HEALTH CARD</h2>
+            <p>Department of Agriculture & Precision Soil Diagnostics</p>
+            <span class="shc-reg-no">Card Reg No: SHC-2026-889412</span>
+          </div>
+          <div class="shc-qr">
+            <div class="qr-mock"></div>
+            <span>Verified QR</span>
+          </div>
+        </div>
+
+        <div class="shc-meta-grid">
+          <div><strong>Farmer Name:</strong> <span id="shc-farmer-name">Rajesh Kumar</span></div>
+          <div><strong>Field Location:</strong> <span>Block A-14, Sector 7</span></div>
+          <div><strong>Sample Date:</strong> <span id="shc-date">30-Jul-2026</span></div>
+          <div><strong>Target Crop:</strong> <strong id="shc-crop">Wheat (Triticum aestivum)</strong></div>
+          <div><strong>Total Area:</strong> <span id="shc-area">2.5 Acres</span></div>
+          <div><strong>Soil SHI Index:</strong> <span id="shc-shi">78 / 100</span></div>
+        </div>
+
+        <h4 class="shc-section-title">1. Soil Test Parameters & Nutrient Deficits</h4>
+        <table class="shc-table">
+          <thead>
+            <tr>
+              <th>Nutrient / Parameter</th>
+              <th>Test Value</th>
+              <th>Target Benchmark</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="shc-test-tbody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+
+        <h4 class="shc-section-title">2. Balanced Chemical & Eco-Organic Fertilizer Dosage</h4>
+        <table class="shc-table">
+          <thead>
+            <tr>
+              <th>Input Name</th>
+              <th>Category</th>
+              <th>Quantity (Per Acre)</th>
+              <th>Total Field Bag Count</th>
+            </tr>
+          </thead>
+          <tbody id="shc-prescription-tbody">
+            <!-- Populated via JS -->
+          </tbody>
+        </table>
+
+        <div class="shc-footer">
+          <div class="shc-notes">
+            <p><strong>Note:</strong> Apply 20-30% organic vermicompost to safeguard earthworms and prevent chemical salt buildup.</p>
+          </div>
+          <div class="shc-sign">
+            <div class="sig-line"></div>
+            <span>Authorized Agronomist Signature</span>
+          </div>
+        </div>
+
+        <div class="shc-actions no-print">
+          <button class="btn-primary" id="btn-print-card">🖨️ Print Official Soil Health Card</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
