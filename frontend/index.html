@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AgroPulse Kisan | AI Computer Vision & Eco-Organic Precision Agronomy</title>
-  <meta name="description" content="AI Crop Vision Scanner, IoT Weather Leaching Radar, Carbon Credit Engine, and Precision Fertilizer Recommendation System.">
+  <title>AgroPulse Kisan | Farmer AI, Crop Calendar & Fertilizer Shop Locator</title>
+  <meta name="description" content="AI Soil Diagnostic, Crop Calendar, Soil Improvement Tips, and Nearest Fertilizer Shop Locator.">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,7 +53,7 @@
         </div>
         <div class="brand-text">
           <h1>AgroPulse <span>Kisan AI</span></h1>
-          <p data-i18n="tagline">AI Vision Scanner & Eco-Organic Precision Agronomy</p>
+          <p data-i18n="tagline">Crop Calendar & Nearest Fertilizer Shop Locator</p>
         </div>
       </div>
 
@@ -62,29 +62,29 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           <span data-i18n="tabDiagnostic">Soil Diagnostic</span>
         </button>
+        <button class="nav-btn" data-tab="tips" id="tab-tips">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          <span>🌱 Soil Health Tips</span>
+        </button>
+        <button class="nav-btn" data-tab="calendar" id="tab-calendar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span>📅 Crop Calendar</span>
+        </button>
+        <button class="nav-btn" data-tab="locator" id="tab-locator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>📍 Nearest Fertilizer Shop</span>
+        </button>
         <button class="nav-btn" data-tab="vision" id="tab-vision">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          <span>👁️ AI Vision Scanner</span>
+          <span>👁️ Vision AI</span>
         </button>
         <button class="nav-btn" data-tab="weather" id="tab-weather">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
-          <span>🌤️ IoT Weather & Carbon</span>
+          <span>🌤️ Weather & Carbon</span>
         </button>
         <button class="nav-btn" data-tab="calculator" id="tab-calculator">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
-          <span data-i18n="tabCalculator">Bag Calculator</span>
-        </button>
-        <button class="nav-btn" data-tab="organic" id="tab-organic">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 0-10 10c0 5.5 4.5 10 10 10s10-4.5 10-10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 0-16 8 8 0 0 1 0 16z"/><path d="M12 6v6l4 2"/></svg>
-          <span data-i18n="tabOrganic">Eco Bio-Suite</span>
-        </button>
-        <button class="nav-btn" data-tab="crops" id="tab-crops">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-          <span data-i18n="tabCrops">Crops DB</span>
-        </button>
-        <button class="nav-btn" data-tab="ai-prompt" id="tab-ai-prompt">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10H12V2z"/><path d="M12 12L2.1 12a10 10 0 0 1 9.9-10v10z"/><path d="M20.2 5.1L12 12V2a10 10 0 0 1 8.2 3.1z"/></svg>
-          <span data-i18n="tabAiPrompt">AI Copilot</span>
+          <span data-i18n="tabCalculator">Calculator</span>
         </button>
       </nav>
 
@@ -108,7 +108,7 @@
         <!-- Hero Visual Banner -->
         <div class="farmer-hero-card" style="background-image: linear-gradient(to right, rgba(11, 19, 32, 0.92), rgba(11, 19, 32, 0.55)), url('assets/hero_banner.png');">
           <div class="hero-content">
-            <span class="hero-badge">🌱 AI-Powered Precision & Eco Soil Shield</span>
+            <span class="hero-badge">🌱 Precision Soil Diagnostic & Shop Locator</span>
             <h2 data-i18n="heroTitle">Smart Fertilizer Recommendation for High Yield</h2>
             <p data-i18n="heroDesc">Combines chemical precision with eco-organic compost, bio-fertilizers, and soil microbial protection to ensure high crop production while keeping soil fertile for generations.</p>
           </div>
@@ -118,8 +118,8 @@
               <span class="pill-val green" id="hero-microbial-val">92% Healthy</span>
             </div>
             <div class="stat-pill">
-              <span class="pill-label">AI Computer Vision</span>
-              <span class="pill-val gold">Active (ResNet-50)</span>
+              <span class="pill-label">Nearby Dealers</span>
+              <span class="pill-val gold">3 Shops Located</span>
             </div>
           </div>
         </div>
@@ -419,45 +419,78 @@
               </div>
             </div>
 
-            <!-- Eco-Healthy Soil Protection Shield -->
-            <div class="card eco-shield-card">
-              <div class="shield-header">
-                <span class="shield-icon">🌿</span>
-                <div>
-                  <h4 data-i18n="ecoHeader">Crop Health & Bio-Organic Soil Shield</h4>
-                  <p class="sub-text" data-i18n="ecoSub">Protects soil earthworms, microbial biomass, and root health while maintaining maximum crop yields.</p>
-                </div>
-              </div>
-              <div class="eco-grid" id="eco-grid-container">
-                <!-- Dynamically Populated -->
-              </div>
-            </div>
-
-            <!-- Split Application Schedule Timeline -->
-            <div class="card timeline-card">
-              <div class="card-header">
-                <h4 data-i18n="timelineHeader">Split Application Growth Schedule</h4>
-                <span class="sub-text">Optimized to prevent runoff and maximize crop absorption</span>
-              </div>
-              <div class="timeline-stepper" id="timeline-stepper">
-                <!-- Dynamically Populated -->
-              </div>
-            </div>
-
-            <!-- Special Soil Amendment & Agronomy Tips -->
-            <div class="card alert-card" id="soil-amendment-card">
-              <div class="alert-icon">💡</div>
-              <div class="alert-content">
-                <h5 id="amendment-title">Soil Conditioning Advisory</h5>
-                <p id="amendment-text">Soil pH is currently balanced at 6.5. Standard fertilizer availability is at peak efficiency (95-100%). No lime or gypsum treatment required at this time.</p>
-              </div>
-            </div>
-
           </section>
         </div>
       </section>
 
-      <!-- TAB 2: AI COMPUTER VISION LEAF SCANNER STUDIO -->
+      <!-- TAB 2: SOIL HEALTH IMPROVEMENT TIPS -->
+      <section class="tab-pane" id="pane-tips">
+        <div class="calc-container">
+          <div class="calc-header">
+            <h2>🌱 Scientific Soil Health & Microbiome Improvement Tips</h2>
+            <p>Proven practices for restoring organic carbon %, protecting soil earthworms, and boosting natural microbial biomass.</p>
+          </div>
+
+          <div class="crops-grid" id="soil-tips-grid">
+            <!-- Dynamically populated via GET /api/soil-tips -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: CROP CALENDAR WITH FERTILIZER SCHEDULE -->
+      <section class="tab-pane" id="pane-calendar">
+        <div class="calc-container">
+          <div class="calc-header">
+            <h2>📅 Interactive Seasonal Crop Calendar & Fertilizer Timeline</h2>
+            <p>Month-by-month agricultural schedule detailing exact dates for sowing, basal fertilizing, top dressing, irrigation, and harvesting.</p>
+            <div class="form-group" style="max-width: 300px; margin-top: 0.5rem;">
+              <label>Select Crop Calendar:</label>
+              <select id="calendar-crop-select" class="form-select">
+                <option value="wheat" selected>🌾 Wheat (Rabi Season)</option>
+                <option value="rice">🍚 Rice / Paddy (Kharif Season)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 id="calendar-season-title">Rabi Season Timeline (Oct - Apr)</h3>
+            <div class="timeline-stepper" id="calendar-timeline-container" style="margin-top: 1rem;">
+              <!-- Dynamically populated via GET /api/crop-calendar -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: NEAREST FERTILIZER SHOP LOCATOR -->
+      <section class="tab-pane" id="pane-locator">
+        <div class="calc-container">
+          <div class="calc-header">
+            <h2>📍 Nearest Authorized Fertilizer Dealers & Krishi Kendra Locator</h2>
+            <p>Locate government-authorized fertilizer hubs, check live stock availability (Neem Urea, DAP, MOP, Vermicompost), and call dealers directly.</p>
+          </div>
+
+          <div class="dealer-locator-grid">
+            <div class="card dealer-list-card">
+              <h3>Nearby Fertilizer Dealers (3 Found)</h3>
+              <div class="dealer-list" id="dealer-list-container">
+                <!-- Dynamically populated via GET /api/dealers -->
+              </div>
+            </div>
+
+            <div class="card map-preview-card">
+              <h3>🗺️ Interactive Location Radar</h3>
+              <div class="map-mock-box">
+                <div class="map-pin pin-user" style="top: 50%; left: 50%;" title="Your Farm Location">📍 You</div>
+                <div class="map-pin pin-dealer" style="top: 35%; left: 60%;" title="Krishi Vigyan Kendra (1.8 km)">🏬 KVK (1.8 km)</div>
+                <div class="map-pin pin-dealer" style="top: 65%; left: 30%;" title="Kisan Bio-Fertilizer (3.4 km)">🏪 Kisan Agro (3.4 km)</div>
+                <div class="map-pin pin-dealer" style="top: 25%; left: 20%;" title="Green Earth Soil Lab (5.1 km)">🧪 Green Lab (5.1 km)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: AI VISION SCANNER STUDIO -->
       <section class="tab-pane" id="pane-vision">
         <div class="calc-container">
           <div class="calc-header">
@@ -525,7 +558,7 @@
         </div>
       </section>
 
-      <!-- TAB 3: IOT WEATHER & CARBON CREDIT STATION -->
+      <!-- TAB 6: IOT WEATHER & CARBON CREDIT STATION -->
       <section class="tab-pane" id="pane-weather">
         <div class="calc-container">
           <div class="calc-header">
@@ -598,7 +631,7 @@
         </div>
       </section>
 
-      <!-- TAB 4: DOSAGE CALCULATOR STUDIO -->
+      <!-- TAB 7: DOSAGE CALCULATOR STUDIO -->
       <section class="tab-pane" id="pane-calculator">
         <div class="calc-container">
           <div class="calc-header">
@@ -665,160 +698,6 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 5: ECO-ORGANIC BIO-SUITE -->
-      <section class="tab-pane" id="pane-organic">
-        <div class="crops-container">
-          <div class="crops-header">
-            <h2>Eco-Organic Bio-Fertilizer & Soil Health Suite</h2>
-            <p>100% natural, sustainable, and soil-restorative organic practices for long-term farm prosperity.</p>
-          </div>
-
-          <div class="crops-grid">
-            <div class="crop-card">
-              <div class="crop-card-header">
-                <div class="crop-icon-bubble">🪱</div>
-                <div>
-                  <h3>Vermicompost / Earthworm Castings</h3>
-                  <p>Rich in humus, microbial enzymes, and trace elements.</p>
-                </div>
-              </div>
-              <p>Replaces up to 25% of synthetic Nitrogen demand while improving soil water retention by 40%.</p>
-              <div class="badge badge-organic">Dosage: 2-3 Tons / Acre</div>
-            </div>
-
-            <div class="crop-card">
-              <div class="crop-card-header">
-                <div class="crop-icon-bubble">🧪</div>
-                <div>
-                  <h3>Azotobacter & PSB Bio-Fertilizer</h3>
-                  <p>Atmospheric Nitrogen-fixing & Phosphorus-solubilizing bacteria.</p>
-                </div>
-              </div>
-              <p>Fixes 20-30 kg atmospheric N/ha naturally and unlocks bound soil Phosphorus.</p>
-              <div class="badge badge-organic">Dosage: 200 ml / Acre Liquid Culture</div>
-            </div>
-
-            <div class="crop-card">
-              <div class="crop-card-header">
-                <div class="crop-icon-bubble">🌿</div>
-                <div>
-                  <h3>Neem-Coated Urea (Slow Release)</h3>
-                  <p>Neem oil coating prevents nitrogen leaching into groundwater.</p>
-                </div>
-              </div>
-              <p>Increases nitrogen uptake efficiency by 15-20% and acts as a natural soil pest repellent.</p>
-              <div class="badge badge-status">Eco-Standard Fertilizer</div>
-            </div>
-
-            <div class="crop-card">
-              <div class="crop-card-header">
-                <div class="crop-icon-bubble">🌾</div>
-                <div>
-                  <h3>Green Manuring (Dhaincha / Sesbania)</h3>
-                  <p>Cover crop plowed back into soil before main crop sowing.</p>
-                </div>
-              </div>
-              <p>Adds up to 60-80 kg natural N/ha and dramatically enhances soil organic carbon %.</p>
-              <div class="badge badge-organic">Practice: 45 Days Pre-Sowing</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 6: CROP DATABASE -->
-      <section class="tab-pane" id="pane-crops">
-        <div class="crops-container">
-          <div class="crops-header">
-            <h2>Crop Nutrient Requirement Database</h2>
-            <p>Explore ideal NPK benchmarks, critical growth stages, pH tolerance, and micro-nutrient sensitivities for major crops.</p>
-            <div class="search-box">
-              <input type="text" id="crop-search-input" placeholder="Search crop (e.g. Wheat, Tomato, Cotton)..." class="form-control">
-            </div>
-          </div>
-
-          <div class="crops-grid" id="crops-cards-grid">
-            <!-- Dynamically populated via GET /api/crops -->
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 7: AI PROMPT SUITE & COPILOT -->
-      <section class="tab-pane" id="pane-ai-prompt">
-        <div class="ai-prompt-container">
-          <div class="ai-header">
-            <h2>AI Agronomist Copilot Studio</h2>
-            <p>Select your preferred AI model architecture (Gemini 1.5, Claude 3.5, GPT-4o) and generate custom soil recipes and prompt scripts.</p>
-          </div>
-
-          <div class="ai-prompt-grid">
-
-            <!-- Prompt 1: System Master Prompt -->
-            <div class="card prompt-card">
-              <div class="prompt-card-header">
-                <div>
-                  <span class="prompt-badge">System Prompt</span>
-                  <h3>Master AI Fertilizer Recommendation Agent</h3>
-                </div>
-                <button class="btn-secondary btn-copy" data-copy-target="prompt-master-text">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  Copy Prompt
-                </button>
-              </div>
-              <pre class="prompt-code-block" id="prompt-master-text">You are AgroBot AI, a world-class Agronomist, Soil Scientist, and Precision Fertilizer Recommendation Specialist.
-
-### CORE OBJECTIVE:
-Given a user's soil test parameters, geographic location/climate, target crop, land size, and growth stage, generate an accurate, scientific, and actionable Fertilizer Prescription and Soil Health Management Plan.
-
-### INPUT PARAMETERS TO REQUEST / ANALYZE:
-1. Soil Nutrients: Nitrogen (N), Phosphorus (P), Potassium (K) (in kg/ha or ppm)
-2. Soil Chemistry: Soil pH, Electrical Conductivity (EC in dS/m), Organic Carbon (%)
-3. Crop & Land Context: Target Crop, Crop Variety, Land Area (Acres/Hectares), Growth Stage (Sowing, Vegetative, Flowering, Fruiting), Irrigation Method
-4. Soil Type: Sandy, Clay, Loamy, Silt, Acidic/Alkaline
-
-### RECOMMENDATION ALGORITHM STEPS:
-1. Calculate Deficit: Nutrient Deficit = Target Crop Requirement - Current Soil Test Level.
-2. Determine Straight & Complex Fertilizers:
-   - Nitrogen sources: Urea (46% N), Ammonium Sulfate (21% N).
-   - Phosphorus sources: DAP (18% N, 46% P2O5), SSP (16% P2O5).
-   - Potassium sources: MOP / Potassium Chloride (60% K2O), Potassium Sulfate (50% K2O).
-3. Adjust for Soil pH:
-   - If pH < 6.0 (Acidic): Recommend Agricultural Lime / Dolomite & Rock Phosphate.
-   - If pH > 7.5 (Alkaline): Recommend Gypsum (CaSO4) & Elemental Sulfur.
-4. Calculate Split Application Schedule:
-   - Basal (50% N, 100% P, 50% K)
-   - First Top Dressing (25% N, 25% K)
-   - Second Top Dressing (25% N, 25% K)
-5. Include Micronutrients & Bio-Fertilizers: Zinc Sulfate, Boron, Azotobacter / PSB / Mycorrhiza.
-
-### OUTPUT FORMAT REQUIREMENTS:
-Format all responses in clean Markdown with:
-1. **Soil Health Summary**: Visual status (Deficient / Optimal / Excess) for N, P, K, pH.
-2. **Fertilizer Prescription Table**: Fertilizer Name, Quantity per Acre, Application Method, Timing.
-3. **Application Timeline**: Step-by-step guidance for Basal, Vegetative, and Flowering stages.
-4. **Organic & Eco-friendly Alternatives**: Vermicompost, Green Manure, Bio-fertilizer supplements.
-5. **Precautions & Best Practices**: Water management, soil compaction prevention, fertigation instructions.</pre>
-            </div>
-
-            <!-- Prompt 2: Dynamic Live Prompt Generator -->
-            <div class="card prompt-card highlight-card">
-              <div class="prompt-card-header">
-                <div>
-                  <span class="prompt-badge live">Live Backend REST API Generator</span>
-                  <h3>Context-Aware AI Query (Generated via POST /api/generate-prompt)</h3>
-                </div>
-                <button class="btn-primary btn-copy" id="btn-copy-dynamic-prompt">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                  Copy Live Prompt
-                </button>
-              </div>
-              <p class="prompt-desc">This prompt is automatically fetched from the Node.js Express REST API using your active soil input values.</p>
-              <pre class="prompt-code-block" id="prompt-dynamic-text">Fetching live prompt from backend API...</pre>
-            </div>
-
           </div>
         </div>
       </section>

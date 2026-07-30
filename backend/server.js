@@ -6,6 +6,9 @@ import promptRoutes from './routes/promptRoutes.js';
 import visionRoutes from './routes/visionRoutes.js';
 import weatherRoutes from './routes/weatherRoutes.js';
 import carbonRoutes from './routes/carbonRoutes.js';
+import calendarRoutes from './routes/calendarRoutes.js';
+import dealerRoutes from './routes/dealerRoutes.js';
+import soilTipsRoutes from './routes/soilTipsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,17 +24,20 @@ app.use('/api', promptRoutes);
 app.use('/api', visionRoutes);
 app.use('/api', weatherRoutes);
 app.use('/api', carbonRoutes);
+app.use('/api', calendarRoutes);
+app.use('/api', dealerRoutes);
+app.use('/api', soilTipsRoutes);
 
 // Health Check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'online',
-    service: 'AgroPulse Kisan AI & Precision Express REST API',
-    version: '2.0.0-AI',
+    service: 'AgroPulse Kisan AI Express REST API',
+    version: '3.0.0-Full',
     timestamp: new Date().toISOString()
   });
 });
 
 app.listen(PORT, () => {
-  console.log(`🌾 AgroPulse AI Backend Server running on http://localhost:${PORT}`);
+  console.log(`🌾 AgroPulse Full AI Backend Server running on http://localhost:${PORT}`);
 });

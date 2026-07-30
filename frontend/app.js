@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AgroPulse Kisan AI - Frontend Client connected to Node.js Express REST API
+   AgroPulse Kisan AI - Client Application & REST API Connector
    ========================================================================== */
 
 const API_BASE_URL = 'http://localhost:5000/api';
@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const TRANSLATIONS = {
     en: {
-      tagline: "AI Vision Scanner & Eco-Organic Precision Agronomy",
+      tagline: "Crop Calendar & Nearest Fertilizer Shop Locator",
       langLabel: "Language / भाषा:",
       voiceBtn: "Read Out Recommendation (Farmer Voice)",
       modeBtn: "Farmer Easy Mode: OFF",
       tabDiagnostic: "Soil Diagnostic",
-      tabCalculator: "Bag Calculator",
+      tabCalculator: "Calculator",
       tabOrganic: "Eco Bio-Suite",
       tabCrops: "Crops DB",
       tabAiPrompt: "AI Copilot",
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
       calcSub: "Convert nutrient deficiency requirements (N, P₂O₅, K₂O) into exact commercial bag quantities for any field size."
     },
     hi: {
-      tagline: "एआई दृष्टि स्कैनर और पर्यावरण-जैविक कृषि प्रणाली",
+      tagline: "फसल कैलेंडर और निकटतम उर्वरक दुकान लोकेटर",
       langLabel: "भाषा / Language:",
       voiceBtn: "सिफारिश बोलकर सुनें (किसान आवाज)",
       modeBtn: "किसान सरल मोड: बंद",
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       calcSub: "अपनी ज़मीन के अनुसार यूरिया, डीएपी और पोटाश की सटीक बोरी की संख्या निकालें।"
     },
     es: {
-      tagline: "Escáner Visión IA y Agronomía de Precisión Eco-Orgánica",
+      tagline: "Calendario de Cultivos y Localizador de Tiendas de Fertilizantes",
       langLabel: "Idioma / Language:",
       voiceBtn: "Escuchar Recomendación (Voz)",
       modeBtn: "Modo Agricultor Fácil: OFF",
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const elBtnRecalculate = document.getElementById('btn-recalculate');
   const elThemeToggle = document.getElementById('theme-toggle');
 
-  // Fetch Crops from Backend REST API
+  // Fetch Crops from REST API
   async function fetchCropsFromBackend() {
     try {
       const res = await fetch(`${API_BASE_URL}/crops`);
@@ -235,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCropDatabaseCards(data.crops);
       }
     } catch (err) {
-      console.warn("Backend server offline, fallback to local render.", err);
+      console.warn("Backend API offline.", err);
     }
   }
 
@@ -250,10 +250,12 @@ document.addEventListener('DOMContentLoaded', () => {
     elSelectCrop.value = state.crop;
   }
 
+  // Initial Fetch Calls
   fetchCropsFromBackend();
   calculateAndRender();
-  fetchWeatherIoTData();
-  fetchCarbonCreditsData();
+  fetchSoilTipsData();
+  fetchCropCalendarData('wheat');
+  fetchDealersData();
 
   // Multi-Language Switcher
   elSelectLang.addEventListener('change', (e) => {
@@ -277,13 +279,12 @@ document.addEventListener('DOMContentLoaded', () => {
     elBtnMode.innerHTML = `👨‍🌾 ${modeText}`;
   }
 
-  // Voice Speech Synthesis
+  // Voice Reader
   elBtnVoice.addEventListener('click', () => {
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const areaText = `${state.landSize} ${state.unit}`;
       let speechText = `Hello Farmer! For your ${state.crop} crop on ${areaText}, we recommend a balanced prescription of Neem Coated Urea, DAP, and organic vermicompost to protect soil health and maximize yield.`;
-      
       const utterance = new SpeechSynthesisUtterance(speechText);
       utterance.rate = 0.9;
       window.speechSynthesis.speak(utterance);
@@ -308,14 +309,10 @@ document.addEventListener('DOMContentLoaded', () => {
       state.soilColor = colorKey;
       const profile = SOIL_COLOR_PROFILES[colorKey];
       if (profile) {
-        state.oc = profile.oc;
-        state.ph = profile.ph;
-        state.soilType = profile.soilType;
-
+        state.oc = profile.oc; state.ph = profile.ph; state.soilType = profile.soilType;
         elRangeOc.value = state.oc; elValOc.textContent = state.oc + '%';
         elRangePh.value = state.ph; elValPh.textContent = state.ph;
         elSelectSoilType.value = state.soilType;
-
         calculateAndRender();
       }
     });
@@ -331,10 +328,6 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.classList.add('active');
       const pane = document.getElementById(`pane-${tabTarget}`);
       if (pane) pane.classList.add('active');
-
-      if (tabTarget === 'ai-prompt') {
-        fetchDynamicPromptFromBackend();
-      }
     });
   });
 
@@ -348,13 +341,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   elSelectCrop.addEventListener('change', (e) => { state.crop = e.target.value; });
   elSelectStage.addEventListener('change', (e) => { state.stage = e.target.value; });
-  elInputLandSize.addEventListener('input', (e) => { state.landSize = parseFloat(e.target.value) || 1; fetchCarbonCreditsData(); });
+  elInputLandSize.addEventListener('input', (e) => { state.landSize = parseFloat(e.target.value) || 1; });
   elSelectUnit.addEventListener('change', (e) => { state.unit = e.target.value; });
   elSelectSoilType.addEventListener('change', (e) => { state.soilType = e.target.value; });
 
   elBtnRecalculate.addEventListener('click', () => {
     calculateAndRender();
-    fetchCarbonCreditsData();
     showToast('⚡ Fetched fresh prescription from Backend REST API!');
   });
 
@@ -384,9 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // =========================================================================
-  // CORE DIAGNOSTIC VIA BACKEND REST API (POST /api/diagnose)
-  // =========================================================================
+  // DIAGNOSTIC REST API
   async function calculateAndRender() {
     try {
       const res = await fetch(`${API_BASE_URL}/diagnose`, {
@@ -402,7 +392,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderBackendResults(data) {
-    const { crop, shiScore, deficits, prescriptions, timeline, amendmentText, microbialHealthPct, potentialYieldBoostPct } = data;
+    const { crop, shiScore, deficits, prescriptions, timeline, amendmentText, potentialYieldBoostPct } = data;
 
     const elShiScore = document.getElementById('shi-score');
     const elShiMeter = document.getElementById('shi-meter');
@@ -487,93 +477,108 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // AI COMPUTER VISION SCANNER HANDLER (POST /api/vision-scan)
+  // 1. SOIL HEALTH IMPROVEMENT TIPS REST API (GET /api/soil-tips)
   // =========================================================================
-  document.querySelectorAll('.btn-vision-sample').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      document.querySelectorAll('.btn-vision-sample').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const sampleKey = btn.getAttribute('data-sample');
-      try {
-        const res = await fetch(`${API_BASE_URL}/vision-scan`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sampleKey })
+  async function fetchSoilTipsData() {
+    try {
+      const res = await fetch(`${API_BASE_URL}/soil-tips`);
+      const data = await res.json();
+      if (data.success && data.tips) {
+        const grid = document.getElementById('soil-tips-grid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        data.tips.forEach(t => {
+          grid.innerHTML += `
+            <div class="crop-card">
+              <div class="crop-card-header">
+                <div class="crop-icon-bubble">${t.icon}</div>
+                <div>
+                  <h3>${t.title}</h3>
+                  <span class="badge badge-organic">${t.category}</span>
+                </div>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-muted);">${t.desc}</p>
+            </div>
+          `;
         });
-        const data = await res.json();
-        if (data.success) {
-          const d = data.diagnosis;
-          document.getElementById('vision-title').textContent = d.title;
-          document.getElementById('vision-confidence').textContent = `${d.confidence}%`;
-          document.getElementById('vision-severity').textContent = `${d.severity}`;
-          document.getElementById('vision-symptoms').textContent = d.symptoms;
-          document.getElementById('vision-organic-remedy').textContent = d.organicRemedy;
-          document.getElementById('vision-chemical-remedy').textContent = d.chemicalRemedy;
-          document.getElementById('vision-ai-model').textContent = d.aiModel;
-          document.getElementById('vision-box-tag').textContent = `AI Bounding Box: ${d.title} (${d.confidence}%)`;
-          showToast(`👁️ Vision AI Scanned: ${d.title}`);
-        }
-      } catch (err) {
-        console.warn("Vision API error", err);
       }
+    } catch (err) {
+      console.warn("Soil Tips API error", err);
+    }
+  }
+
+  // =========================================================================
+  // 2. CROP CALENDAR REST API (GET /api/crop-calendar)
+  // =========================================================================
+  const calendarCropSelect = document.getElementById('calendar-crop-select');
+  if (calendarCropSelect) {
+    calendarCropSelect.addEventListener('change', (e) => {
+      fetchCropCalendarData(e.target.value);
     });
-  });
+  }
 
-  // =========================================================================
-  // IOT WEATHER & CARBON CREDITS HANDLERS
-  // =========================================================================
-  async function fetchWeatherIoTData() {
+  async function fetchCropCalendarData(cropKey) {
     try {
-      const res = await fetch(`${API_BASE_URL}/weather-iot`);
+      const res = await fetch(`${API_BASE_URL}/crop-calendar?crop=${cropKey}`);
       const data = await res.json();
-      if (data.success) {
-        document.getElementById('iot-moisture').textContent = `${data.sensors.soilMoisture}% Optimal`;
-        document.getElementById('iot-soil-temp').textContent = `${data.sensors.soilTemp} °C`;
-        document.getElementById('iot-ambient-temp').textContent = `${data.sensors.ambientTemp} °C`;
-        document.getElementById('iot-solar').textContent = data.sensors.solarRadiation;
-        document.getElementById('weather-risk-title').textContent = `AI Rain Risk: ${data.aiLeachingRisk.riskLevel}`;
-        document.getElementById('weather-advisory').textContent = data.aiLeachingRisk.advisory;
+      if (data.success && data.calendar) {
+        document.getElementById('calendar-season-title').textContent = `${data.calendar.cropName} - ${data.calendar.season}`;
+        const container = document.getElementById('calendar-timeline-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        data.calendar.schedule.forEach(s => {
+          container.innerHTML += `
+            <div class="step-card">
+              <span class="step-phase">${s.month} (${s.status})</span>
+              <h5 class="step-title">${s.activity}</h5>
+              <p class="step-desc">${s.fert}</p>
+            </div>
+          `;
+        });
       }
     } catch (err) {
-      console.warn("Weather API error", err);
+      console.warn("Crop Calendar API error", err);
     }
   }
 
-  async function fetchCarbonCreditsData() {
+  // =========================================================================
+  // 3. NEAREST FERTILIZER DEALER LOCATOR REST API (GET /api/dealers)
+  // =========================================================================
+  async function fetchDealersData() {
     try {
-      const res = await fetch(`${API_BASE_URL}/carbon-credits`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ landSize: state.landSize, oc: state.oc })
-      });
+      const res = await fetch(`${API_BASE_URL}/dealers`);
       const data = await res.json();
-      if (data.success) {
-        document.getElementById('carbon-co2').textContent = `${data.co2eSavedTons} Tons`;
-        document.getElementById('carbon-credits').textContent = `${data.carbonCreditsEarned} Credits`;
-        document.getElementById('carbon-value').textContent = `$${data.carbonValueUSD} USD`;
-        document.getElementById('cert-id').textContent = data.certificateId;
-        document.getElementById('carbon-area').textContent = `${state.landSize} ${state.unit.toUpperCase()}(S)`;
-      }
-    } catch (err) {
-      console.warn("Carbon API error", err);
-    }
-  }
+      if (data.success && data.dealers) {
+        const container = document.getElementById('dealer-list-container');
+        if (!container) return;
+        container.innerHTML = '';
 
-  // Fetch Dynamic Prompt from REST API
-  async function fetchDynamicPromptFromBackend() {
-    try {
-      const res = await fetch(`${API_BASE_URL}/generate-prompt`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(state)
-      });
-      const data = await res.json();
-      if (data.success) {
-        document.getElementById('prompt-dynamic-text').textContent = data.prompt;
+        data.dealers.forEach(d => {
+          container.innerHTML += `
+            <div class="dealer-card">
+              <div class="dealer-header">
+                <div>
+                  <span class="dealer-name">${d.name}</span>
+                  <p style="font-size: 0.8rem; color: var(--text-muted);">${d.address} • ${d.type}</p>
+                </div>
+                <span class="dealer-distance">📍 ${d.distance}</span>
+              </div>
+              <div class="dealer-stock-tags">
+                <span class="stock-tag">Neem Urea: ${d.stock.urea}</span>
+                <span class="stock-tag">DAP: ${d.stock.dap}</span>
+                <span class="stock-tag">Vermicompost: ${d.stock.vermicompost}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.35rem;">
+                <span style="font-size: 0.8rem; color: var(--accent-gold);">${d.rating}</span>
+                <a href="tel:${d.phone}" class="btn-preset" style="text-decoration: none; display: inline-block;">📞 Call Dealer</a>
+              </div>
+            </div>
+          `;
+        });
       }
     } catch (err) {
-      console.warn("Failed to fetch AI prompt from API", err);
+      console.warn("Dealers API error", err);
     }
   }
 
@@ -627,18 +632,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnOpenModal) btnOpenModal.addEventListener('click', () => modalSoilCard.classList.add('active'));
   if (btnCloseModal) btnCloseModal.addEventListener('click', () => modalSoilCard.classList.remove('active'));
   if (btnPrintCard) btnPrintCard.addEventListener('click', () => window.print());
-
-  // Copy Prompt Handlers
-  document.querySelectorAll('.btn-copy').forEach(btn => {
-    btn.addEventListener('click', () => {
-      let targetId = btn.getAttribute('data-copy-target') || 'prompt-dynamic-text';
-      const codeBlock = document.getElementById(targetId);
-      if (codeBlock) {
-        navigator.clipboard.writeText(codeBlock.textContent);
-        showToast('📋 AI Prompt copied to clipboard!');
-      }
-    });
-  });
 
   function showToast(msg) {
     const existing = document.querySelector('.toast');
